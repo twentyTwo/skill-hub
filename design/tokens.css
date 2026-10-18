@@ -1,0 +1,133 @@
+/*
+ * Skill Hub — Option A "Workbench" design tokens.
+ *
+ * Two layers:
+ *   1. --sh-*        : the design's own values (used as-is by the desktop app).
+ *   2. Inside VS Code webviews, the surface/text tokens fall back to the user's
+ *      theme via --vscode-* variables, so the extension matches any theme.
+ *      The brand accent and status colours stay fixed.
+ *
+ * Usage (webview):   <body class="sh-vscode">
+ * Usage (desktop):   <body class="sh-desktop">
+ */
+
+:root {
+  /* Surfaces (dark) */
+  --sh-bg-chrome:   #0A0C0E;  /* title bar, activity bar, status bar */
+  --sh-bg-app:      #0D0F12;  /* window ground */
+  --sh-bg-sidebar:  #121519;
+  --sh-bg-editor:   #16191E;
+  --sh-bg-card:     #1A1E24;
+  --sh-bg-raised:   #1C2027;  /* secondary buttons */
+  --sh-bg-selected: #232831;
+  --sh-bg-inset:    #0F1216;  /* code blocks, inputs */
+  --sh-border:      #262B33;
+  --sh-border-strong: #333944;
+  --sh-border-dashed: #3A404A; /* "not installed" / drop zones */
+
+  /* Text */
+  --sh-text:        #E7E9EC;
+  --sh-text-body:   #C9CED5;
+  --sh-text-muted:  #A1A9B4;
+  --sh-text-faint:  #8A939E;  /* section labels, meta — min size 11px */
+
+  /* Brand accent */
+  --sh-accent:      #FF9A4D;
+  --sh-accent-hover:#FFB77F;
+  --sh-on-accent:   #1F1206;
+  --sh-accent-soft: rgba(255, 154, 77, 0.12);
+  --sh-accent-line: rgba(255, 154, 77, 0.35);
+
+  /* Status — maps 1:1 to SkillStatus in src/core/workspace.ts */
+  --sh-synced-fg:    #6FDBA6;  --sh-synced-bg:    rgba(95, 211, 154, 0.14);
+  --sh-outdated-fg:  #7DBBFF;  --sh-outdated-bg:  rgba(90, 169, 255, 0.16);
+  --sh-modified-fg:  #EBC968;  --sh-modified-bg:  rgba(232, 193, 90, 0.16);
+  --sh-conflict-fg:  #F5A8A8;  --sh-conflict-bg:  rgba(242, 139, 139, 0.16);  /* + 2px accent border */
+  --sh-missing-fg:   #F28B8B;  --sh-missing-bg:   rgba(242, 139, 139, 0.10);
+  --sh-unmanaged-fg: #A1A9B4;  --sh-unmanaged-bg: rgba(161, 169, 180, 0.12);
+  --sh-danger:       #F28B8B;  --sh-danger-line:  #4A2A2A;
+
+  /* Type */
+  --sh-font-ui:   'IBM Plex Sans', system-ui, sans-serif;
+  --sh-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --sh-fs-xs: 11px;   /* section labels (uppercase, 0.06–0.08em tracking, 600) */
+  --sh-fs-sm: 12px;
+  --sh-fs-base: 13px; /* VS Code; desktop uses 13.5px */
+  --sh-fs-body: 14px; /* descriptions */
+  --sh-fs-h1: 24px;
+
+  /* Shape & space */
+  --sh-radius-sm: 5px;   /* inline buttons */
+  --sh-radius:    6px;   /* rows, buttons */
+  --sh-radius-md: 8px;   /* segmented control, inputs */
+  --sh-radius-lg: 10px;  /* cards */
+  --sh-radius-xl: 12px;  /* desktop cards, table */
+  --sh-pill: 999px;
+  --sh-space-1: 4px; --sh-space-2: 8px; --sh-space-3: 12px;
+  --sh-space-4: 16px; --sh-space-5: 24px; --sh-space-6: 32px;
+  --sh-focus: 0 0 0 3px rgba(255, 154, 77, 0.15);
+}
+
+/* VS Code webviews: follow the user's theme for surfaces and text. */
+.sh-vscode {
+  --sh-bg-sidebar:  var(--vscode-sideBar-background, #121519);
+  --sh-bg-editor:   var(--vscode-editor-background, #16191E);
+  --sh-bg-card:     var(--vscode-editorWidget-background, #1A1E24);
+  --sh-bg-raised:   var(--vscode-button-secondaryBackground, #1C2027);
+  --sh-bg-selected: var(--vscode-list-activeSelectionBackground, #232831);
+  --sh-bg-inset:    var(--vscode-input-background, #0F1216);
+  --sh-border:      var(--vscode-widget-border, var(--vscode-panel-border, #262B33));
+  --sh-text:        var(--vscode-foreground, #E7E9EC);
+  --sh-text-muted:  var(--vscode-descriptionForeground, #A1A9B4);
+  --sh-font-ui:     var(--vscode-font-family, 'IBM Plex Sans', system-ui, sans-serif);
+  --sh-font-mono:   var(--vscode-editor-font-family, 'JetBrains Mono', monospace);
+  --sh-fs-base:     var(--vscode-font-size, 13px);
+}
+
+/* Light VS Code themes: darken status text so it keeps 4.5:1 on light grounds. */
+body.vscode-light.sh-vscode {
+  --sh-accent: #C25A0F; --sh-on-accent: #FFFFFF;
+  --sh-synced-fg: #1E7A4C; --sh-outdated-fg: #1F5FB8; --sh-modified-fg: #8A6200;
+  --sh-conflict-fg: #B42318; --sh-missing-fg: #B42318; --sh-unmanaged-fg: #5E646B;
+}
+
+body { margin: 0; background: var(--sh-bg-app); color: var(--sh-text); font-family: var(--sh-font-ui); font-size: var(--sh-fs-base); }
+.sh-vscode { background: var(--sh-bg-editor); }
+
+/* ---- Core components ---- */
+.sh-label   { font-size: var(--sh-fs-xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--sh-text-faint); }
+.sh-mono    { font-family: var(--sh-font-mono); }
+
+.sh-btn          { height: 32px; padding: 0 14px; border-radius: var(--sh-radius); border: 1px solid var(--sh-border-strong); background: var(--sh-bg-raised); color: var(--sh-text); font: inherit; font-weight: 500; cursor: pointer; }
+.sh-btn--primary { border: 0; background: var(--sh-accent); color: var(--sh-on-accent); font-weight: 600; }
+.sh-btn--ghost   { background: none; border-color: var(--sh-accent); color: var(--sh-accent); }
+.sh-btn--danger  { background: none; border-color: var(--sh-danger-line); color: var(--sh-danger); }
+.sh-btn--sm      { height: 26px; padding: 0 10px; border-radius: var(--sh-radius-sm); font-size: 11.5px; }
+.sh-btn:focus-visible { outline: none; box-shadow: var(--sh-focus); }
+
+.sh-segmented        { display: flex; padding: 3px; background: var(--sh-bg-app); border: 1px solid var(--sh-border); border-radius: var(--sh-radius-md); }
+.sh-segmented button { flex: 1; height: 30px; border: 0; border-radius: var(--sh-radius); background: none; color: var(--sh-text-muted); font: inherit; }
+.sh-segmented [aria-selected="true"] { background: var(--sh-bg-selected); color: var(--sh-text); font-weight: 600; }
+
+.sh-card { background: var(--sh-bg-card); border: 1px solid var(--sh-border); border-radius: var(--sh-radius-lg); padding: var(--sh-space-3); }
+.sh-card--empty { background: none; border-style: dashed; border-color: var(--sh-border-dashed); }
+
+.sh-chip        { height: 24px; padding: 0 8px; border-radius: var(--sh-pill); display: inline-flex; align-items: center; gap: 5px; font-size: var(--sh-fs-xs); }
+.sh-chip--on    { background: var(--sh-accent-soft); color: var(--sh-accent-hover); border: 1px solid var(--sh-accent-line); }
+.sh-chip--off   { background: none; color: var(--sh-text-faint); border: 1px dashed var(--sh-border-dashed); }
+
+/* Skill row (sidebar) */
+.sh-row           { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--sh-radius); }
+.sh-row[aria-selected="true"] { background: var(--sh-bg-selected); box-shadow: inset 2px 0 0 var(--sh-accent); }
+.sh-row__name     { font-family: var(--sh-font-mono); font-size: 12.5px; }
+.sh-row__meta     { font-size: 11.5px; color: var(--sh-text-faint); }
+
+/* Status badge: 22×22 square (rows), 44×32 (matrix cells) or pill (headers) */
+.sh-status { width: 22px; height: 22px; border-radius: var(--sh-radius); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+.sh-status--pill { width: auto; height: 22px; padding: 0 9px; border-radius: var(--sh-pill); font-size: 11.5px; font-weight: 600; }
+.sh-status--synced    { color: var(--sh-synced-fg);    background: var(--sh-synced-bg); }
+.sh-status--outdated  { color: var(--sh-outdated-fg);  background: var(--sh-outdated-bg); }
+.sh-status--modified  { color: var(--sh-modified-fg);  background: var(--sh-modified-bg); }
+.sh-status--conflict  { color: var(--sh-conflict-fg);  background: var(--sh-conflict-bg); box-shadow: inset 0 0 0 2px var(--sh-accent); }
+.sh-status--missing   { color: var(--sh-missing-fg);   background: var(--sh-missing-bg); }
+.sh-status--unmanaged { color: var(--sh-unmanaged-fg); background: var(--sh-unmanaged-bg); }

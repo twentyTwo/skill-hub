@@ -1,0 +1,692 @@
+{
+  "name": "skill-hub",
+  "displayName": "Skill Hub",
+  "description": "Collect AI agent skills from anywhere (GitHub, any git repo, URLs, local folders) and apply them to any repository for Claude Code, GitHub Copilot, Cursor or AGENTS.md.",
+  "version": "0.3.0",
+  "publisher": "skill-hub",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/twentyTwo/skill-hub.git",
+    "directory": "vscode-extension"
+  },
+  "homepage": "https://github.com/twentyTwo/skill-hub/tree/main/vscode-extension#readme",
+  "bugs": {
+    "url": "https://github.com/twentyTwo/skill-hub/issues"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "AI",
+    "Other"
+  ],
+  "keywords": [
+    "skills",
+    "agent skills",
+    "SKILL.md",
+    "claude",
+    "copilot",
+    "cursor",
+    "AGENTS.md"
+  ],
+  "main": "./dist/extension.js",
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [
+    "workspaceContains:skill-hub.lock.json",
+    "onWebviewPanel:skillHub.detail"
+  ],
+  "capabilities": {
+    "virtualWorkspaces": false,
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "skillHub",
+          "title": "Skill Hub",
+          "icon": "media/skill-hub.svg"
+        }
+      ]
+    },
+    "views": {
+      "skillHub": [
+        {
+          "type": "webview",
+          "id": "skillHub.main",
+          "name": "Skill Hub",
+          "contextualTitle": "Skill Hub",
+          "when": "!config.skillHub.classicViews"
+        },
+        {
+          "id": "skillHub.library",
+          "name": "Library",
+          "contextualTitle": "Skill Hub",
+          "when": "config.skillHub.classicViews"
+        },
+        {
+          "id": "skillHub.workspace",
+          "name": "Workspace",
+          "contextualTitle": "Skill Hub",
+          "when": "config.skillHub.classicViews"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "skillHub.library",
+        "contents": "Your Skill Hub is empty.\nAdd skills from GitHub, any git repository, a link to a markdown file, or a local folder.\n[Add Skill](command:skillHub.addSkill)\n[Search GitHub for Skills](command:skillHub.searchSkills)\n[Create New Skill](command:skillHub.createSkill)"
+      },
+      {
+        "view": "skillHub.workspace",
+        "contents": "Open a folder to apply skills to it.\n[Open Folder](command:workbench.action.files.openFolder)",
+        "when": "workspaceFolderCount == 0"
+      },
+      {
+        "view": "skillHub.workspace",
+        "contents": "No skills are applied to this workspace yet.\n[Apply Skill](command:skillHub.applySkill)\nTip: drag skills from the Library and drop them here.",
+        "when": "workspaceFolderCount > 0"
+      }
+    ],
+    "commands": [
+      {
+        "command": "skillHub.addSkill",
+        "title": "Add Skill to Hub…",
+        "category": "Skill Hub",
+        "icon": "$(add)"
+      },
+      {
+        "command": "skillHub.searchSkills",
+        "title": "Search GitHub for Skills…",
+        "category": "Skill Hub",
+        "icon": "$(search)"
+      },
+      {
+        "command": "skillHub.createSkill",
+        "title": "Create New Skill…",
+        "category": "Skill Hub",
+        "icon": "$(new-file)"
+      },
+      {
+        "command": "skillHub.applySkill",
+        "title": "Apply Skill to Workspace…",
+        "category": "Skill Hub",
+        "icon": "$(arrow-right)"
+      },
+      {
+        "command": "skillHub.openSkill",
+        "title": "Open Skill",
+        "category": "Skill Hub",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "skillHub.openDetails",
+        "title": "Open Details",
+        "category": "Skill Hub",
+        "icon": "$(info)"
+      },
+      {
+        "command": "skillHub.previewSkill",
+        "title": "Open Skill Preview",
+        "category": "Skill Hub",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "skillHub.openSource",
+        "title": "Open Source in Browser",
+        "category": "Skill Hub",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "skillHub.revealSkill",
+        "title": "Reveal in File Explorer",
+        "category": "Skill Hub"
+      },
+      {
+        "command": "skillHub.updateSkill",
+        "title": "Update Skill from Source",
+        "category": "Skill Hub",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "skillHub.updateAllSkills",
+        "title": "Sync All Skills from Source",
+        "category": "Skill Hub",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "skillHub.deleteSkill",
+        "title": "Remove Skill from Hub",
+        "category": "Skill Hub",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "skillHub.openLibraryFolder",
+        "title": "Open Hub Folder in New Window",
+        "category": "Skill Hub",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "skillHub.refresh",
+        "title": "Refresh",
+        "category": "Skill Hub",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "skillHub.showRepo",
+        "title": "Show Skills in This Repo",
+        "category": "Skill Hub"
+      },
+      {
+        "command": "skillHub.addFromExplorer",
+        "title": "Add to Skill Hub",
+        "category": "Skill Hub"
+      },
+      {
+        "command": "skillHub.workspace.open",
+        "title": "Open",
+        "category": "Skill Hub",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "skillHub.workspace.update",
+        "title": "Update from Hub",
+        "category": "Skill Hub",
+        "icon": "$(arrow-circle-up)"
+      },
+      {
+        "command": "skillHub.workspace.updateAll",
+        "title": "Update All Workspace Skills from Hub",
+        "category": "Skill Hub",
+        "icon": "$(arrow-circle-up)"
+      },
+      {
+        "command": "skillHub.workspace.saveToHub",
+        "title": "Save Local Changes to Hub",
+        "category": "Skill Hub",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "skillHub.workspace.resolve",
+        "title": "Resolve Conflict…",
+        "category": "Skill Hub",
+        "icon": "$(warning)"
+      },
+      {
+        "command": "skillHub.workspace.addToHub",
+        "title": "Add to Hub",
+        "category": "Skill Hub",
+        "icon": "$(add)"
+      },
+      {
+        "command": "skillHub.workspace.changeTargets",
+        "title": "Change Targets…",
+        "category": "Skill Hub"
+      },
+      {
+        "command": "skillHub.workspace.remove",
+        "title": "Remove Skill from Workspace…",
+        "category": "Skill Hub",
+        "icon": "$(close)"
+      },
+      {
+        "command": "skillHub.workspace.restore",
+        "title": "Restore Skills from Lock File",
+        "category": "Skill Hub",
+        "icon": "$(history)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "skillHub.searchSkills",
+          "when": "view == skillHub.main",
+          "group": "navigation@1"
+        },
+        {
+          "command": "skillHub.addSkill",
+          "when": "view == skillHub.main",
+          "group": "navigation@2"
+        },
+        {
+          "command": "skillHub.updateAllSkills",
+          "when": "view == skillHub.main",
+          "group": "navigation@3"
+        },
+        {
+          "command": "skillHub.createSkill",
+          "when": "view == skillHub.main",
+          "group": "1_add@1"
+        },
+        {
+          "command": "skillHub.workspace.updateAll",
+          "when": "view == skillHub.main",
+          "group": "2_repo@1"
+        },
+        {
+          "command": "skillHub.workspace.restore",
+          "when": "view == skillHub.main",
+          "group": "2_repo@2"
+        },
+        {
+          "command": "skillHub.openLibraryFolder",
+          "when": "view == skillHub.main",
+          "group": "3_hub@1"
+        },
+        {
+          "command": "skillHub.refresh",
+          "when": "view == skillHub.main",
+          "group": "3_hub@2"
+        },
+        {
+          "command": "skillHub.searchSkills",
+          "when": "view == skillHub.library",
+          "group": "navigation@1"
+        },
+        {
+          "command": "skillHub.addSkill",
+          "when": "view == skillHub.library",
+          "group": "navigation@2"
+        },
+        {
+          "command": "skillHub.createSkill",
+          "when": "view == skillHub.library",
+          "group": "navigation@3"
+        },
+        {
+          "command": "skillHub.updateAllSkills",
+          "when": "view == skillHub.library",
+          "group": "navigation@4"
+        },
+        {
+          "command": "skillHub.refresh",
+          "when": "view == skillHub.library",
+          "group": "navigation@5"
+        },
+        {
+          "command": "skillHub.openLibraryFolder",
+          "when": "view == skillHub.library",
+          "group": "more@1"
+        },
+        {
+          "command": "skillHub.applySkill",
+          "when": "view == skillHub.workspace",
+          "group": "navigation@1"
+        },
+        {
+          "command": "skillHub.workspace.updateAll",
+          "when": "view == skillHub.workspace",
+          "group": "navigation@2"
+        },
+        {
+          "command": "skillHub.refresh",
+          "when": "view == skillHub.workspace",
+          "group": "navigation@3"
+        },
+        {
+          "command": "skillHub.workspace.restore",
+          "when": "view == skillHub.workspace",
+          "group": "more@1"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "skillHub.applySkill",
+          "when": "view == skillHub.library && viewItem =~ /\\blibrarySkill\\b/",
+          "group": "inline@1"
+        },
+        {
+          "command": "skillHub.applySkill",
+          "when": "view == skillHub.library && viewItem =~ /\\blibrarySkill\\b/",
+          "group": "1_apply@1"
+        },
+        {
+          "command": "skillHub.openDetails",
+          "when": "view == skillHub.library && viewItem =~ /\\blibrarySkill\\b/",
+          "group": "2_open@0"
+        },
+        {
+          "command": "skillHub.openSkill",
+          "when": "view == skillHub.library && viewItem =~ /\\blibrarySkill\\b/",
+          "group": "2_open@1"
+        },
+        {
+          "command": "skillHub.previewSkill",
+          "when": "view == skillHub.library && viewItem =~ /\\blibrarySkill\\b/",
+          "group": "2_open@2"
+        },
+        {
+          "command": "skillHub.openSource",
+          "when": "view == skillHub.library && viewItem =~ /\\bweb\\b/",
+          "group": "2_open@3"
+        },
+        {
+          "command": "skillHub.revealSkill",
+          "when": "view == skillHub.library && viewItem =~ /\\blibrarySkill\\b/",
+          "group": "2_open@4"
+        },
+        {
+          "command": "skillHub.updateSkill",
+          "when": "view == skillHub.library && viewItem =~ /\\bupdatable\\b/",
+          "group": "3_update@1"
+        },
+        {
+          "command": "skillHub.deleteSkill",
+          "when": "view == skillHub.library && viewItem =~ /\\blibrarySkill\\b/",
+          "group": "4_remove@1"
+        },
+        {
+          "command": "skillHub.workspace.update",
+          "when": "view == skillHub.workspace && viewItem =~ /\\bsyncable\\b/",
+          "group": "inline@1"
+        },
+        {
+          "command": "skillHub.workspace.saveToHub",
+          "when": "view == skillHub.workspace && viewItem =~ /\\bpushable\\b/",
+          "group": "inline@2"
+        },
+        {
+          "command": "skillHub.workspace.addToHub",
+          "when": "view == skillHub.workspace && viewItem =~ /\\badoptable\\b/",
+          "group": "inline@3"
+        },
+        {
+          "command": "skillHub.workspace.update",
+          "when": "view == skillHub.workspace && viewItem =~ /\\bsyncable\\b/",
+          "group": "1_sync@1"
+        },
+        {
+          "command": "skillHub.workspace.saveToHub",
+          "when": "view == skillHub.workspace && viewItem =~ /\\bpushable\\b/",
+          "group": "1_sync@2"
+        },
+        {
+          "command": "skillHub.workspace.addToHub",
+          "when": "view == skillHub.workspace && viewItem =~ /\\badoptable\\b/",
+          "group": "1_sync@3"
+        },
+        {
+          "command": "skillHub.workspace.resolve",
+          "when": "view == skillHub.workspace && viewItem =~ /\\bconflicted\\b/",
+          "group": "1_sync@3"
+        },
+        {
+          "command": "skillHub.workspace.changeTargets",
+          "when": "view == skillHub.workspace && viewItem =~ /\\bmanaged\\b/",
+          "group": "1_sync@4"
+        },
+        {
+          "command": "skillHub.openDetails",
+          "when": "view == skillHub.workspace && viewItem =~ /\\bworkspaceSkill\\b/",
+          "group": "2_open@0"
+        },
+        {
+          "command": "skillHub.workspace.open",
+          "when": "view == skillHub.workspace && viewItem =~ /\\bopenable\\b/",
+          "group": "2_open@1"
+        },
+        {
+          "command": "skillHub.workspace.remove",
+          "when": "view == skillHub.workspace && viewItem =~ /\\bworkspaceSkill\\b/",
+          "group": "9_remove@1"
+        },
+        {
+          "command": "skillHub.applySkill",
+          "when": "view == skillHub.workspace && viewItem == workspaceFolder",
+          "group": "inline@1"
+        },
+        {
+          "command": "skillHub.applySkill",
+          "when": "view == skillHub.workspace && viewItem == workspaceFolder",
+          "group": "1_apply@1"
+        },
+        {
+          "command": "skillHub.workspace.updateAll",
+          "when": "view == skillHub.workspace && viewItem == workspaceFolder",
+          "group": "1_apply@2"
+        },
+        {
+          "command": "skillHub.workspace.restore",
+          "when": "view == skillHub.workspace && viewItem == workspaceFolder",
+          "group": "1_apply@3"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "skillHub.addFromExplorer",
+          "when": "explorerResourceIsFolder || resourceExtname == .md || resourceExtname == .mdc",
+          "group": "skillHub@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "skillHub.revealSkill",
+          "when": "false"
+        },
+        {
+          "command": "skillHub.openSource",
+          "when": "false"
+        },
+        {
+          "command": "skillHub.addFromExplorer",
+          "when": "false"
+        },
+        {
+          "command": "skillHub.workspace.open",
+          "when": "false"
+        },
+        {
+          "command": "skillHub.workspace.update",
+          "when": "false"
+        },
+        {
+          "command": "skillHub.workspace.saveToHub",
+          "when": "false"
+        },
+        {
+          "command": "skillHub.workspace.addToHub",
+          "when": "false"
+        },
+        {
+          "command": "skillHub.workspace.changeTargets",
+          "when": "false"
+        },
+        {
+          "command": "skillHub.openDetails",
+          "when": "false"
+        },
+        {
+          "command": "skillHub.workspace.resolve",
+          "when": "false"
+        }
+      ],
+      "webview/context": [
+        {
+          "command": "skillHub.applySkill",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill'",
+          "group": "1_apply@1"
+        },
+        {
+          "command": "skillHub.openDetails",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill'",
+          "group": "2_open@1"
+        },
+        {
+          "command": "skillHub.openSkill",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill'",
+          "group": "2_open@2"
+        },
+        {
+          "command": "skillHub.previewSkill",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill'",
+          "group": "2_open@3"
+        },
+        {
+          "command": "skillHub.openSource",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill' && skillHubFlags =~ /\\bweb\\b/",
+          "group": "2_open@4"
+        },
+        {
+          "command": "skillHub.revealSkill",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill'",
+          "group": "2_open@5"
+        },
+        {
+          "command": "skillHub.updateSkill",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill' && skillHubFlags =~ /\\bupdatable\\b/",
+          "group": "3_update@1"
+        },
+        {
+          "command": "skillHub.deleteSkill",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill'",
+          "group": "4_remove@1"
+        },
+        {
+          "command": "skillHub.workspace.update",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'workspaceSkill' && skillHubFlags =~ /\\bsyncable\\b/",
+          "group": "1_sync@1"
+        },
+        {
+          "command": "skillHub.workspace.saveToHub",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'workspaceSkill' && skillHubFlags =~ /\\bpushable\\b/",
+          "group": "1_sync@2"
+        },
+        {
+          "command": "skillHub.workspace.resolve",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'workspaceSkill' && skillHubFlags =~ /\\bconflicted\\b/",
+          "group": "1_sync@3"
+        },
+        {
+          "command": "skillHub.workspace.addToHub",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'workspaceSkill' && skillHubFlags =~ /\\badoptable\\b/",
+          "group": "1_sync@4"
+        },
+        {
+          "command": "skillHub.workspace.changeTargets",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'workspaceSkill' && skillHubFlags =~ /\\bmanaged\\b/",
+          "group": "1_sync@5"
+        },
+        {
+          "command": "skillHub.openDetails",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'workspaceSkill'",
+          "group": "2_open@1"
+        },
+        {
+          "command": "skillHub.workspace.open",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'workspaceSkill' && skillHubFlags =~ /\\bopenable\\b/",
+          "group": "2_open@2"
+        },
+        {
+          "command": "skillHub.workspace.remove",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'workspaceSkill'",
+          "group": "9_remove@1"
+        },
+        {
+          "command": "skillHub.applySkill",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'repo'",
+          "group": "1_apply@1"
+        },
+        {
+          "command": "skillHub.workspace.updateAll",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'repo'",
+          "group": "1_apply@2"
+        },
+        {
+          "command": "skillHub.workspace.restore",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'repo'",
+          "group": "1_apply@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Skill Hub",
+      "properties": {
+        "skillHub.libraryPath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "markdownDescription": "Folder that stores your Skill Hub. Leave empty to use `~/.skill-hub`. Point it at a synced or git-tracked folder to share one hub across machines."
+        },
+        "skillHub.defaultTargets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "claude"
+          ],
+          "markdownDescription": "Targets pre-selected when you apply a skill. Built-in ids: `claude` (`.claude/skills`), `copilot` (`.github/skills`), `cursor` (`.cursor/rules`), `agents` (`#skillHub.agentsSkillsFolder#` + `AGENTS.md`), plus the id of any `#skillHub.customTargets#` entry."
+        },
+        "skillHub.promptForTargets": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Ask which targets to install into every time you apply a skill. When off, `#skillHub.defaultTargets#` is used without asking."
+        },
+        "skillHub.customTargets": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "folder"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$",
+                "description": "Short identifier, e.g. \"codex\"."
+              },
+              "label": {
+                "type": "string",
+                "description": "Name shown in pickers."
+              },
+              "folder": {
+                "type": "string",
+                "description": "Workspace-relative folder that will hold one sub-folder per skill."
+              }
+            }
+          },
+          "markdownDescription": "Extra folders to install skill folders into, for agents that read `SKILL.md` from somewhere else. Example: `{ \"id\": \"codex\", \"label\": \"Codex\", \"folder\": \".codex/skills\" }`."
+        },
+        "skillHub.agentsSkillsFolder": {
+          "type": "string",
+          "default": ".agents/skills",
+          "markdownDescription": "Where the `agents` target copies skill folders. Each skill's name and description is also listed in a managed section of `AGENTS.md`, so any agent that reads `AGENTS.md` can find them."
+        },
+        "skillHub.classicViews": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Show the Library and Workspace tree views instead of the Skill Hub sidebar."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "bundle": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "typecheck": "tsc -p ./ --noEmit && tsc -p ./tsconfig.webview.json",
+    "test": "tsc -p ./ && node --test \"out/test/**/*.test.js\"",
+    "test:integration": "npm run bundle && tsc -p ./ && node out/test-integration/runTest.js",
+    "vscode:prepublish": "node scripts/build.mjs --production",
+    "package": "vsce package --no-dependencies"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "~1.90.0",
+    "@vscode/codicons": "^0.0.46-24",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.0"
+  }
+}

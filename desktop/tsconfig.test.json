@@ -1,0 +1,9 @@
+{
+  // Compiles the backend and its tests to out/ for `node --test`. No Electron involved.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false
+  },
+  "include": ["src/main", "src/shared", "test"],
+  "exclude": ["src/main/main.ts"]
+}

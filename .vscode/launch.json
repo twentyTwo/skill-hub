@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": ["--extensionDevelopmentPath=${workspaceFolder}/vscode-extension"],
+      "outFiles": ["${workspaceFolder}/vscode-extension/dist/**/*.js"],
+      "preLaunchTask": "extension: bundle"
+    },
+    {
+      "name": "Run Desktop App",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/desktop",
+      "runtimeExecutable": "${workspaceFolder}/desktop/node_modules/.bin/electron",
+      "windows": { "runtimeExecutable": "${workspaceFolder}/desktop/node_modules/.bin/electron.cmd" },
+      "args": ["."],
+      "outFiles": ["${workspaceFolder}/desktop/dist/**/*.js"],
+      "preLaunchTask": "desktop: build"
+    }
+  ]
+}

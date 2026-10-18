@@ -1,0 +1,17 @@
+.vscode/**
+.vscode-test/**
+.agents/**
+.claude/**
+design/**
+scripts/**
+src/**
+out/**
+node_modules/**
+**/*.map
+**/*.ts
+tsconfig*.json
+AGENTS.md
+skill-hub.lock.json
+.gitignore
+*.vsix
+media/icon-source.svg

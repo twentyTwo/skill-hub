@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Hub · VS Code · Workspace + skill detail</title>
+<!-- Skill Hub · Option A "Workbench" reference mockup. Static export: open in a browser. -->
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+body{margin:0;background:#0D0F12}
+a{color:#FF9A4D}a:hover{color:#FFB77F}
+</style>
+
+</head>
+<body>
+
+
+<div style="width: 100%; min-height: 900px; box-sizing: border-box; background: #0D0F12; color: #E7E9EC; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 13px; display: flex; flex-direction: column">
+
+<div style="height: 34px; display: flex; align-items: center; justify-content: center; background: #0A0C0E; border-bottom: 1px solid #22262D; color: #A1A9B4; font-size: 12px">skill-hub — Visual Studio Code</div>
+
+<div style="flex: 1; display: flex; flex-wrap: wrap; min-height: 0">
+
+<nav aria-label="Activity bar" style="flex: 0 0 48px; background: #0A0C0E; border-right: 1px solid #22262D; display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 8px">
+<button aria-label="Explorer" style="width: 44px; height: 44px; background: none; border: 0; color: #6F7884; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h9l5 5v11H4z"></path><path d="M13 4v5h5"></path></svg></button>
+<button aria-label="Search" style="width: 44px; height: 44px; background: none; border: 0; color: #6F7884; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5"></path></svg></button>
+<button aria-label="Skill Hub" style="width: 44px; height: 44px; background: none; border: 0; border-left: 2px solid #FF9A4D; color: #FF9A4D; display: flex; align-items: center; justify-content: center; position: relative"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2.5l8.25 4.75v9.5L12 21.5l-8.25-4.75v-9.5z"></path><path d="M12 8l1.2 2.8L16 12l-2.8 1.2L12 16l-1.2-2.8L8 12l2.8-1.2z"></path></svg><span style="position: absolute; right: 7px; bottom: 7px; min-width: 15px; height: 15px; border-radius: 8px; background: #5AA9FF; color: #06121F; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span></button>
+</nav>
+
+<aside aria-label="Skill Hub" style="flex: 0 0 312px; background: #121519; border-right: 1px solid #22262D; display: flex; flex-direction: column; min-width: 0">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 12px 6px 16px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: #A1A9B4">SKILL HUB</span>
+<div style="display: flex; gap: 2px">
+<button aria-label="Search skills" style="width: 28px; height: 28px; border: 0; background: none; color: #A1A9B4; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5"></path></svg></button>
+<button aria-label="Add skill" style="width: 28px; height: 28px; border: 0; background: none; color: #A1A9B4; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"></path></svg></button>
+<button aria-label="Sync all" style="width: 28px; height: 28px; border: 0; background: none; color: #A1A9B4; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3"></path><path d="M18 3v4h-4M6 21v-4h4"></path></svg></button>
+</div>
+</div>
+
+<div role="tablist" style="margin: 4px 12px 12px; padding: 3px; display: flex; background: #0D0F12; border: 1px solid #262B33; border-radius: 8px">
+<button role="tab" aria-selected="true" style="flex: 1; height: 30px; border: 0; border-radius: 6px; background: #22272F; color: #E7E9EC; font: inherit; font-weight: 600">This repo</button>
+<button role="tab" aria-selected="false" style="flex: 1; height: 30px; border: 0; border-radius: 6px; background: none; color: #A1A9B4; font: inherit">Library</button>
+<button role="tab" aria-selected="false" style="flex: 1; height: 30px; border: 0; border-radius: 6px; background: none; color: #A1A9B4; font: inherit">Discover</button>
+</div>
+
+<div style="margin: 0 12px 14px; padding: 12px; background: #181C22; border: 1px solid #262B33; border-radius: 10px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A1A9B4" stroke-width="1.8"><path d="M3 7h6l2 2h10v10H3z"></path></svg>
+<span style="font-weight: 600">skill-hub</span>
+<span style="margin-left: auto; font-size: 11px; color: #A1A9B4; font-family: 'JetBrains Mono', monospace">lock ✓</span>
+</div>
+<div style="color: #A1A9B4; font-size: 12px">3 skills applied · 1 update · 1 local edit</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+
+<span style="height: 24px; padding: 0 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; background: rgba(255,154,77,0.12); color: #FFB77F; border: 1px solid rgba(255,154,77,0.35);">● Claude Code</span>
+
+<span style="height: 24px; padding: 0 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; background: rgba(255,154,77,0.12); color: #FFB77F; border: 1px solid rgba(255,154,77,0.35);">● AGENTS.md</span>
+
+<span style="height: 24px; padding: 0 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; background: none; color: #8A939E; border: 1px dashed #3A404A;">○ Copilot</span>
+
+<span style="height: 24px; padding: 0 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; background: none; color: #8A939E; border: 1px dashed #3A404A;">○ Cursor</span>
+
+</div>
+</div>
+
+<div style="flex: 1; overflow: auto; padding: 0 6px; display: flex; flex-direction: column; gap: 12px">
+
+<section style="display: flex; flex-direction: column; gap: 2px">
+<div style="padding: 0 10px 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; color: #8A939E">NEEDS ATTENTION</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; ">
+<span style="flex: 0 0 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: rgba(90,169,255,0.16); color: #7DBBFF;">↑</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">pdf</span>
+<span style="font-size: 11.5px; color: #8A939E; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Update available from anthropics/skills</span>
+</div>
+
+<button style="height: 26px; padding: 0 10px; border-radius: 5px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; font: inherit; font-size: 11.5px; white-space: nowrap">Update</button>
+
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; ">
+<span style="flex: 0 0 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: rgba(232,193,90,0.16); color: #EBC968;">✎</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">frontend-design</span>
+<span style="font-size: 11.5px; color: #8A939E; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Edited in this repo</span>
+</div>
+
+<button style="height: 26px; padding: 0 10px; border-radius: 5px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; font: inherit; font-size: 11.5px; white-space: nowrap">Save to hub</button>
+
+</div>
+
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 2px">
+<div style="padding: 0 10px 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; color: #8A939E">APPLIED</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; background: #232831; box-shadow: inset 2px 0 0 #FF9A4D;">
+<span style="flex: 0 0 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: rgba(95,211,154,0.14); color: #6FDBA6;">✓</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">tech-debt-audit</span>
+<span style="font-size: 11.5px; color: #8A939E; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">claude · agents</span>
+</div>
+
+</div>
+
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 2px">
+<div style="padding: 0 10px 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; color: #8A939E">FOUND, NOT TRACKED</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; ">
+<span style="flex: 0 0 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: rgba(161,169,180,0.12); color: #A1A9B4;">○</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">webapp-testing</span>
+<span style="font-size: 11.5px; color: #8A939E; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">in .github/skills</span>
+</div>
+
+<button style="height: 26px; padding: 0 10px; border-radius: 5px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; font: inherit; font-size: 11.5px; white-space: nowrap">Add to hub</button>
+
+</div>
+
+</section>
+
+</div>
+
+<div style="margin: 12px; padding: 14px; border: 1px dashed #3A404A; border-radius: 10px; color: #8A939E; font-size: 12px; text-align: center">Drop skills from Library here to apply</div>
+</aside>
+
+<main style="flex: 999 1 560px; min-width: 0; background: #16191E; display: flex; flex-direction: column">
+<div style="height: 36px; display: flex; align-items: stretch; background: #121519; border-bottom: 1px solid #22262D">
+<div style="padding: 0 14px; display: flex; align-items: center; gap: 8px; background: #16191E; border-top: 2px solid #FF9A4D; font-size: 12.5px"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF9A4D" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2.5l8.25 4.75v9.5L12 21.5l-8.25-4.75v-9.5z"></path></svg>tech-debt-audit</div>
+<div style="padding: 0 14px; display: flex; align-items: center; color: #8A939E; font-size: 12.5px">README.md</div>
+</div>
+
+<div style="flex: 1; overflow: auto; padding: 32px 40px; display: flex; flex-direction: column; gap: 24px; max-width: 1040px; box-sizing: border-box; width: 100%">
+
+<header style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 16px">
+<div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<h1 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 500">tech-debt-audit</h1>
+<span style="height: 22px; padding: 0 9px; border-radius: 11px; background: rgba(95,211,154,0.14); color: #6FDBA6; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center">✓ Up to date</span>
+</div>
+<div style="color: #A1A9B4; font-size: 12.5px; display: flex; flex-wrap: wrap; gap: 14px">
+<span>GitHub · <a href="https://github.com/ksimback/tech-debt-skill">ksimback/tech-debt-skill</a></span>
+<span>Applied Oct 17, 2026</span>
+<span style="font-family: 'JetBrains Mono', monospace">#b5d40adf</span>
+</div>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button style="height: 34px; padding: 0 14px; border-radius: 6px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; font: inherit; font-weight: 500">Open SKILL.md</button>
+<button style="height: 34px; padding: 0 14px; border-radius: 6px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; font: inherit; font-weight: 500">Check source</button>
+<button style="height: 34px; padding: 0 14px; border-radius: 6px; border: 0; background: #FF9A4D; color: #1F1206; font: inherit; font-weight: 600">Apply to more targets</button>
+</div>
+</header>
+
+<p style="margin: 0; max-width: 72ch; color: #C9CED5; font-size: 14px; line-height: 1.6">Thorough, user-invoked tech debt and architecture audit of the current codebase. Produces TECH_DEBT_AUDIT.md with file-cited findings, severity, effort estimates, and a required "looks bad but is actually fine" section.</p>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #8A939E">INSTALLED FOR</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px">
+
+<div style="padding: 14px; border-radius: 10px; display: flex; flex-direction: column; gap: 8px; background: #1A1E24; border: 1px solid #262B33;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span style="font-weight: 600">Claude Code</span>
+<span style="font-size: 11.5px; color: #6FDBA6;">✓ In sync</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #8A939E; word-break: break-all">.claude/skills/tech-debt-audit/</span>
+
+</div>
+
+<div style="padding: 14px; border-radius: 10px; display: flex; flex-direction: column; gap: 8px; background: #1A1E24; border: 1px solid #262B33;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span style="font-weight: 600">AGENTS.md</span>
+<span style="font-size: 11.5px; color: #6FDBA6;">✓ In sync</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #8A939E; word-break: break-all">.agents/skills/tech-debt-audit/ + AGENTS.md</span>
+
+</div>
+
+<div style="padding: 14px; border-radius: 10px; display: flex; flex-direction: column; gap: 8px; background: none; border: 1px dashed #3A404A;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span style="font-weight: 600">GitHub Copilot</span>
+<span style="font-size: 11.5px; color: #8A939E;">Not installed</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #8A939E; word-break: break-all">.github/skills/</span>
+
+<button style="align-self: flex-start; height: 28px; padding: 0 10px; border-radius: 5px; border: 1px solid #FF9A4D; background: none; color: #FF9A4D; font: inherit; font-size: 12px; font-weight: 500">+ Install here</button>
+
+</div>
+
+<div style="padding: 14px; border-radius: 10px; display: flex; flex-direction: column; gap: 8px; background: none; border: 1px dashed #3A404A;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span style="font-weight: 600">Cursor</span>
+<span style="font-size: 11.5px; color: #8A939E;">Not installed</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #8A939E; word-break: break-all">.cursor/rules/</span>
+
+<button style="align-self: flex-start; height: 28px; padding: 0 10px; border-radius: 5px; border: 1px solid #FF9A4D; background: none; color: #FF9A4D; font: inherit; font-size: 12px; font-weight: 500">+ Install here</button>
+
+</div>
+
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<section style="flex: 2 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #8A939E">SKILL.MD</h2>
+<div style="background: #0F1216; border: 1px solid #262B33; border-radius: 10px; padding: 16px 18px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; color: #A1A9B4; white-space: pre-wrap">---
+<span style="color: #FF9A4D">name</span>: tech-debt-audit
+<span style="color: #FF9A4D">description</span>: Thorough, user-invoked tech debt and
+  architecture audit of the current codebase…
+---
+
+<span style="color: #E7E9EC"># Tech Debt Audit</span>
+…</div>
+</section>
+<section style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #8A939E">FILES</h2>
+<div style="background: #1A1E24; border: 1px solid #262B33; border-radius: 10px; padding: 6px">
+
+<div style="display: flex; align-items: center; gap: 8px; padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A939E" stroke-width="1.8"><path d="M5 3h9l5 5v13H5z"></path></svg>SKILL.md</div>
+
+<div style="display: flex; align-items: center; gap: 8px; padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A939E" stroke-width="1.8"><path d="M5 3h9l5 5v13H5z"></path></svg>README.md</div>
+
+<div style="display: flex; align-items: center; gap: 8px; padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A939E" stroke-width="1.8"><path d="M5 3h9l5 5v13H5z"></path></svg>.gitignore</div>
+
+</div>
+<button style="height: 32px; border-radius: 6px; border: 1px solid #4A2A2A; background: none; color: #F28B8B; font: inherit; font-size: 12.5px">Remove from this repo</button>
+</section>
+</div>
+
+</div>
+</main>
+</div>
+
+<div style="height: 24px; display: flex; align-items: center; gap: 16px; padding: 0 12px; background: #0A0C0E; border-top: 1px solid #22262D; font-size: 11.5px; color: #A1A9B4">
+<span>main</span>
+<span style="color: #FF9A4D">⬡ Skill Hub · 3 applied · 1 update</span>
+</div>
+</div>
+
+</body>
+</html>

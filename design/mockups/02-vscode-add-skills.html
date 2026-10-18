@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Hub · VS Code · Library + Add skills</title>
+<!-- Skill Hub · Option A "Workbench" reference mockup. Static export: open in a browser. -->
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+body{margin:0;background:#0D0F12}
+a{color:#FF9A4D}a:hover{color:#FFB77F}
+</style>
+
+</head>
+<body>
+
+
+<div style="width: 100%; min-height: 900px; box-sizing: border-box; background: #0D0F12; color: #E7E9EC; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 13px; display: flex; flex-direction: column">
+
+<div style="height: 34px; display: flex; align-items: center; justify-content: center; background: #0A0C0E; border-bottom: 1px solid #22262D; color: #A1A9B4; font-size: 12px">skill-hub — Visual Studio Code</div>
+
+<div style="flex: 1; display: flex; flex-wrap: wrap; min-height: 0">
+
+<nav aria-label="Activity bar" style="flex: 0 0 48px; background: #0A0C0E; border-right: 1px solid #22262D; display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 8px">
+<button aria-label="Explorer" style="width: 44px; height: 44px; background: none; border: 0; color: #6F7884; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h9l5 5v11H4z"></path><path d="M13 4v5h5"></path></svg></button>
+<button aria-label="Skill Hub" style="width: 44px; height: 44px; background: none; border: 0; border-left: 2px solid #FF9A4D; color: #FF9A4D; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2.5l8.25 4.75v9.5L12 21.5l-8.25-4.75v-9.5z"></path><path d="M12 8l1.2 2.8L16 12l-2.8 1.2L12 16l-1.2-2.8L8 12l2.8-1.2z"></path></svg></button>
+</nav>
+
+<aside aria-label="Skill Hub library" style="flex: 0 0 312px; background: #121519; border-right: 1px solid #22262D; display: flex; flex-direction: column; min-width: 0">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 12px 6px 16px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: #A1A9B4">SKILL HUB</span>
+<button aria-label="Add skill" style="width: 28px; height: 28px; border: 0; background: none; color: #A1A9B4; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"></path></svg></button>
+</div>
+
+<div role="tablist" style="margin: 4px 12px 12px; padding: 3px; display: flex; background: #0D0F12; border: 1px solid #262B33; border-radius: 8px">
+<button role="tab" aria-selected="false" style="flex: 1; height: 30px; border: 0; border-radius: 6px; background: none; color: #A1A9B4; font: inherit">This repo</button>
+<button role="tab" aria-selected="true" style="flex: 1; height: 30px; border: 0; border-radius: 6px; background: #22272F; color: #E7E9EC; font: inherit; font-weight: 600">Library</button>
+<button role="tab" aria-selected="false" style="flex: 1; height: 30px; border: 0; border-radius: 6px; background: none; color: #A1A9B4; font: inherit">Discover</button>
+</div>
+
+<label style="margin: 0 12px 8px; height: 34px; padding: 0 10px; display: flex; align-items: center; gap: 8px; background: #0D0F12; border: 1px solid #333944; border-radius: 7px; color: #8A939E">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5"></path></svg>
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Filter library</span>
+<input placeholder="Filter library" style="flex: 1; min-width: 0; background: none; border: 0; color: #E7E9EC; font: inherit; outline: none">
+</label>
+<div style="margin: 0 12px 14px; display: flex; flex-wrap: wrap; gap: 6px">
+<button style="height: 26px; padding: 0 10px; border-radius: 13px; border: 1px solid rgba(255,154,77,0.4); background: rgba(255,154,77,0.12); color: #FFB77F; font: inherit; font-size: 11.5px">All</button>
+<button style="height: 26px; padding: 0 10px; border-radius: 13px; border: 1px solid #333944; background: none; color: #A1A9B4; font: inherit; font-size: 11.5px">Applied here</button>
+<button style="height: 26px; padding: 0 10px; border-radius: 13px; border: 1px solid #333944; background: none; color: #A1A9B4; font: inherit; font-size: 11.5px">Has update</button>
+</div>
+
+<div style="flex: 1; overflow: auto; padding: 0 6px; display: flex; flex-direction: column; gap: 14px">
+
+<section style="display: flex; flex-direction: column; gap: 2px">
+<div style="padding: 0 10px 4px; display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #8A939E"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; padding: 1px 5px; border-radius: 4px; background: #1C2027; color: #A1A9B4">gh</span>anthropics/skills</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px">
+<span style="flex: 0 0 8px; height: 8px; border-radius: 4px; background: #FF9A4D;"></span>
+<span style="flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 12.5px">pdf</span>
+<span style="font-size: 11px; color: #8A939E">↑ update</span>
+<button aria-label="Apply to this repo" style="width: 26px; height: 26px; border-radius: 5px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px">
+<span style="flex: 0 0 8px; height: 8px; border-radius: 4px; background: #FF9A4D;"></span>
+<span style="flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 12.5px">frontend-design</span>
+<span style="font-size: 11px; color: #8A939E"></span>
+<button aria-label="Apply to this repo" style="width: 26px; height: 26px; border-radius: 5px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px">
+<span style="flex: 0 0 8px; height: 8px; border-radius: 4px; border: 1.5px solid #6F7884; box-sizing: border-box;"></span>
+<span style="flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 12.5px">docx</span>
+<span style="font-size: 11px; color: #8A939E"></span>
+<button aria-label="Apply to this repo" style="width: 26px; height: 26px; border-radius: 5px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 2px">
+<div style="padding: 0 10px 4px; display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #8A939E"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; padding: 1px 5px; border-radius: 4px; background: #1C2027; color: #A1A9B4">gh</span>ksimback/tech-debt-skill</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px">
+<span style="flex: 0 0 8px; height: 8px; border-radius: 4px; background: #FF9A4D;"></span>
+<span style="flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 12.5px">tech-debt-audit</span>
+<span style="font-size: 11px; color: #8A939E"></span>
+<button aria-label="Apply to this repo" style="width: 26px; height: 26px; border-radius: 5px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 2px">
+<div style="padding: 0 10px 4px; display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #8A939E"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; padding: 1px 5px; border-radius: 4px; background: #1C2027; color: #A1A9B4">local</span>~/skills</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px">
+<span style="flex: 0 0 8px; height: 8px; border-radius: 4px; border: 1.5px solid #6F7884; box-sizing: border-box;"></span>
+<span style="flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 12.5px">review-checklist</span>
+<span style="font-size: 11px; color: #8A939E"></span>
+<button aria-label="Apply to this repo" style="width: 26px; height: 26px; border-radius: 5px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+
+</section>
+
+</div>
+<div style="padding: 10px 16px; border-top: 1px solid #22262D; font-size: 11.5px; color: #8A939E; display: flex; gap: 14px"><span><span style="color: #FF9A4D">●</span> applied here</span><span>○ not applied</span></div>
+</aside>
+
+<main style="flex: 999 1 560px; min-width: 0; background: #16191E; display: flex; flex-direction: column">
+<div style="height: 36px; display: flex; align-items: stretch; background: #121519; border-bottom: 1px solid #22262D">
+<div style="padding: 0 14px; display: flex; align-items: center; gap: 8px; background: #16191E; border-top: 2px solid #FF9A4D; font-size: 12.5px">Add skills</div>
+</div>
+
+<div style="flex: 1; overflow: auto; padding: 36px 40px; box-sizing: border-box; width: 100%; max-width: 980px; display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-size: 22px; font-weight: 600">Add skills to your hub</h1>
+<p style="margin: 0; color: #A1A9B4; font-size: 13.5px">Paste a GitHub repo, any git URL, a link to a markdown file, a local path — or just type words to search GitHub.</p>
+</div>
+
+<label style="display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 8px 0 16px; background: #0F1216; border: 1px solid #FF9A4D; border-radius: 10px; box-shadow: 0 0 0 3px rgba(255,154,77,0.15)">
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Source or search words</span>
+<input value="anthropics/skills" style="flex: 1; min-width: 0; background: none; border: 0; color: #E7E9EC; font-family: 'JetBrains Mono', monospace; font-size: 15px; outline: none">
+<span style="height: 30px; padding: 0 10px; border-radius: 6px; background: #1C2027; color: #A1A9B4; font-size: 12px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap"><span style="color: #6FDBA6">●</span> GitHub repository</span>
+</label>
+
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+
+<button style="height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #333944; background: none; color: #A1A9B4; font: inherit; font-size: 12px">GitHub repo</button>
+
+<button style="height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #333944; background: none; color: #A1A9B4; font: inherit; font-size: 12px">Git URL</button>
+
+<button style="height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #333944; background: none; color: #A1A9B4; font: inherit; font-size: 12px">File link</button>
+
+<button style="height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #333944; background: none; color: #A1A9B4; font: inherit; font-size: 12px">Local folder</button>
+
+<button style="height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #333944; background: none; color: #A1A9B4; font: inherit; font-size: 12px">Create new skill</button>
+
+</div>
+
+<section style="background: #1A1E24; border: 1px solid #262B33; border-radius: 12px; overflow: hidden">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #262B33; flex-wrap: wrap">
+<span style="font-weight: 600">Found 6 skills in anthropics/skills</span>
+<label style="display: flex; align-items: center; gap: 8px; color: #A1A9B4; font-size: 12.5px"><input type="checkbox" style="accent-color: #FF9A4D; width: 16px; height: 16px">Select all</label>
+</div>
+
+<label style="display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-bottom: 1px solid #22262D; opacity: 0.6;">
+<input type="checkbox" disabled style="margin-top: 2px; accent-color: #FF9A4D; width: 16px; height: 16px">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500">pdf</span>
+<span style="font-size: 11px; padding: 1px 7px; border-radius: 9px; background: #262B33; color: #A1A9B4">Already in hub</span></div>
+<span style="color: #A1A9B4; font-size: 12.5px">Read, extract and fill PDF files.</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A939E; white-space: nowrap">skills/pdf</span>
+</label>
+
+<label style="display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-bottom: 1px solid #22262D; background: rgba(255,154,77,0.06);">
+<input type="checkbox" checked style="margin-top: 2px; accent-color: #FF9A4D; width: 16px; height: 16px">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500">docx</span>
+</div>
+<span style="color: #A1A9B4; font-size: 12.5px">Create and edit Word documents.</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A939E; white-space: nowrap">skills/docx</span>
+</label>
+
+<label style="display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-bottom: 1px solid #22262D; background: rgba(255,154,77,0.06);">
+<input type="checkbox" checked style="margin-top: 2px; accent-color: #FF9A4D; width: 16px; height: 16px">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500">xlsx</span>
+</div>
+<span style="color: #A1A9B4; font-size: 12.5px">Work with spreadsheets and formulas.</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A939E; white-space: nowrap">skills/xlsx</span>
+</label>
+
+<label style="display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-bottom: 1px solid #22262D; background: rgba(255,154,77,0.06);">
+<input type="checkbox" checked style="margin-top: 2px; accent-color: #FF9A4D; width: 16px; height: 16px">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500">webapp-testing</span>
+</div>
+<span style="color: #A1A9B4; font-size: 12.5px">Test local web apps with a headless browser.</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A939E; white-space: nowrap">skills/webapp-testing</span>
+</label>
+
+<label style="display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-bottom: 1px solid #22262D; ">
+<input type="checkbox" style="margin-top: 2px; accent-color: #FF9A4D; width: 16px; height: 16px">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500">mcp-builder</span>
+</div>
+<span style="color: #A1A9B4; font-size: 12.5px">Guide for building MCP servers.</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A939E; white-space: nowrap">skills/mcp-builder</span>
+</label>
+
+<label style="display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-bottom: 1px solid #22262D; opacity: 0.6;">
+<input type="checkbox" disabled style="margin-top: 2px; accent-color: #FF9A4D; width: 16px; height: 16px">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500">frontend-design</span>
+<span style="font-size: 11px; padding: 1px 7px; border-radius: 9px; background: #262B33; color: #A1A9B4">Already in hub</span></div>
+<span style="color: #A1A9B4; font-size: 12.5px">Distinctive, production-grade front-end UI.</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A939E; white-space: nowrap">skills/frontend-design</span>
+</label>
+
+</section>
+
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 16px; background: #121519; border: 1px solid #262B33; border-radius: 12px">
+<label style="display: flex; align-items: center; gap: 8px; font-size: 12.5px"><input type="checkbox" checked style="accent-color: #FF9A4D; width: 16px; height: 16px">Also apply to this repo for</label>
+<span style="height: 26px; padding: 0 10px; border-radius: 13px; background: rgba(255,154,77,0.12); border: 1px solid rgba(255,154,77,0.35); color: #FFB77F; font-size: 11.5px; display: inline-flex; align-items: center">Claude Code</span>
+<span style="height: 26px; padding: 0 10px; border-radius: 13px; background: rgba(255,154,77,0.12); border: 1px solid rgba(255,154,77,0.35); color: #FFB77F; font-size: 11.5px; display: inline-flex; align-items: center">AGENTS.md</span>
+<button style="margin-left: auto; height: 38px; padding: 0 18px; border-radius: 7px; border: 0; background: #FF9A4D; color: #1F1206; font: inherit; font-weight: 600">Add 3 skills</button>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body>
+</html>

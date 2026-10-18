@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Hub · Desktop · Projects</title>
+<!-- Skill Hub · Option A "Workbench" reference mockup. Static export: open in a browser. -->
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+body{margin:0;background:#0D0F12}
+a{color:#FF9A4D}a:hover{color:#FFB77F}
+</style>
+
+</head>
+<body>
+
+
+<div style="width: 100%; min-height: 900px; box-sizing: border-box; background: #0D0F12; color: #E7E9EC; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 13.5px; display: flex; flex-direction: column">
+
+<header style="min-height: 56px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 8px 20px; border-bottom: 1px solid #22262D; background: #0A0C0E">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF9A4D" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2.5l8.25 4.75v9.5L12 21.5l-8.25-4.75v-9.5z"></path><path d="M12 8l1.2 2.8L16 12l-2.8 1.2L12 16l-1.2-2.8L8 12l2.8-1.2z"></path></svg>
+<span style="font-weight: 700; font-size: 15px">Skill Hub</span>
+</div>
+<nav aria-label="Main" style="display: flex; gap: 4px; flex-wrap: wrap">
+<a href="03-desktop-library.html" style="height: 34px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; color: #C9CED5; text-decoration: none">Library</a>
+<a href="#" style="height: 34px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; color: #C9CED5; text-decoration: none">Discover</a>
+<a href="#" aria-current="page" style="height: 34px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; background: #22272F; color: #E7E9EC; font-weight: 600; text-decoration: none">Projects</a>
+<a href="#" style="height: 34px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; color: #C9CED5; text-decoration: none">Activity</a>
+</nav>
+<button style="margin-left: auto; height: 36px; padding: 0 14px; border-radius: 8px; border: 0; background: #FF9A4D; color: #1F1206; font: inherit; font-weight: 600">+ Add project folder</button>
+</header>
+
+<div style="flex: 1; display: flex; flex-wrap: wrap; min-height: 0">
+<main style="flex: 999 1 640px; min-width: 0; padding: 24px 28px; display: flex; flex-direction: column; gap: 18px; box-sizing: border-box">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<div><h1 style="margin: 0; font-size: 24px; font-weight: 600">Projects</h1><p style="margin: 4px 0 0; color: #A1A9B4">Every repo you've added, and the state of each skill in it — read from each repo's skill-hub.lock.json.</p></div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 16px; border-radius: 10px; background: rgba(90,169,255,0.08); border: 1px solid rgba(90,169,255,0.28)">
+<span style="font-weight: 600; color: #9CCBFF">↑ 3 updates across 2 projects</span>
+<span style="color: #A1A9B4; font-size: 12.5px">1 conflict needs a decision</span>
+<button style="margin-left: auto; height: 32px; padding: 0 14px; border-radius: 7px; border: 0; background: #5AA9FF; color: #06121F; font: inherit; font-weight: 600">Update all safe</button>
+</div>
+
+<div style="overflow-x: auto; border: 1px solid #262B33; border-radius: 12px; background: #14171C">
+<table style="width: 100%; min-width: 760px; border-collapse: collapse">
+<thead>
+<tr>
+<th scope="col" style="text-align: left; padding: 14px 16px; font-size: 11px; font-weight: 600; letter-spacing: 0.07em; color: #8A939E; border-bottom: 1px solid #262B33">PROJECT</th>
+
+<th scope="col" style="padding: 14px 8px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 500; color: #C9CED5; border-bottom: 1px solid #262B33; white-space: nowrap">pdf</th>
+
+<th scope="col" style="padding: 14px 8px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 500; color: #C9CED5; border-bottom: 1px solid #262B33; white-space: nowrap">tech-debt-audit</th>
+
+<th scope="col" style="padding: 14px 8px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 500; color: #C9CED5; border-bottom: 1px solid #262B33; white-space: nowrap">frontend-design</th>
+
+<th scope="col" style="padding: 14px 8px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 500; color: #C9CED5; border-bottom: 1px solid #262B33; white-space: nowrap">docx</th>
+
+<th scope="col" style="padding: 14px 8px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 500; color: #C9CED5; border-bottom: 1px solid #262B33; white-space: nowrap">webapp-testing</th>
+
+<th scope="col" style="padding: 14px 8px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 500; color: #C9CED5; border-bottom: 1px solid #262B33; white-space: nowrap">review-checklist</th>
+
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<th scope="row" style="text-align: left; padding: 12px 16px; border-bottom: 1px solid #1F242B; font-weight: 500"><span style="display: block">skill-hub</span><span style="font-size: 11.5px; color: #8A939E; font-weight: 400">Claude Code · AGENTS.md</span></th>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Update available" title="Update available" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 0; background: rgba(90,169,255,0.18); color: #7DBBFF;">↑</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Up to date" title="Up to date" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 0; background: rgba(95,211,154,0.14); color: #6FDBA6;">✓</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Edited in workspace" title="Edited in workspace" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 0; background: rgba(232,193,90,0.16); color: #EBC968;">✎</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+</tr>
+
+<tr>
+<th scope="row" style="text-align: left; padding: 12px 16px; border-bottom: 1px solid #1F242B; font-weight: 500"><span style="display: block">[project-2]</span><span style="font-size: 11.5px; color: #8A939E; font-weight: 400">Claude Code · Copilot</span></th>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Update available" title="Update available" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 0; background: rgba(90,169,255,0.18); color: #7DBBFF;">↑</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Up to date" title="Up to date" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 0; background: rgba(95,211,154,0.14); color: #6FDBA6;">✓</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Up to date" title="Up to date" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 0; background: rgba(95,211,154,0.14); color: #6FDBA6;">✓</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Up to date" title="Up to date" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 0; background: rgba(95,211,154,0.14); color: #6FDBA6;">✓</button>
+</td>
+
+</tr>
+
+<tr>
+<th scope="row" style="text-align: left; padding: 12px 16px; border-bottom: 1px solid #1F242B; font-weight: 500"><span style="display: block">[project-3]</span><span style="font-size: 11.5px; color: #8A939E; font-weight: 400">Cursor</span></th>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Both changed" title="Both changed" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 2px solid #FF9A4D; background: rgba(242,139,139,0.16); color: #F5A8A8;">!</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Up to date" title="Up to date" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 0; background: rgba(95,211,154,0.14); color: #6FDBA6;">✓</button>
+</td>
+
+</tr>
+
+<tr>
+<th scope="row" style="text-align: left; padding: 12px 16px; border-bottom: 1px solid #1F242B; font-weight: 500"><span style="display: block">[project-4]</span><span style="font-size: 11.5px; color: #8A939E; font-weight: 400">AGENTS.md</span></th>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Files missing" title="Files missing" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 0; background: rgba(242,139,139,0.10); color: #F28B8B;">×</button>
+</td>
+
+<td style="padding: 8px; text-align: center; border-bottom: 1px solid #1F242B">
+<button aria-label="Not applied — click to apply" title="Not applied — click to apply" style="width: 44px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; border: 1px dashed #333944; background: none; color: #5F6873;">+</button>
+</td>
+
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: #A1A9B4">
+
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 20px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; border: 0; background: rgba(95,211,154,0.14); color: #6FDBA6;">✓</span>Up to date</span>
+
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 20px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; border: 0; background: rgba(90,169,255,0.18); color: #7DBBFF;">↑</span>Update available</span>
+
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 20px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; border: 0; background: rgba(232,193,90,0.16); color: #EBC968;">✎</span>Edited in workspace</span>
+
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 20px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; border: 2px solid #FF9A4D; background: rgba(242,139,139,0.16); color: #F5A8A8;">!</span>Both changed</span>
+
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 20px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; border: 0; background: rgba(242,139,139,0.10); color: #F28B8B;">×</span>Files missing</span>
+
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 20px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; border: 1px dashed #333944; background: none; color: #5F6873;">+</span>Not applied</span>
+
+</div>
+</main>
+
+<aside aria-label="Resolve conflict" style="flex: 1 1 380px; max-width: 440px; padding: 24px; border-left: 1px solid #22262D; background: #121519; display: flex; flex-direction: column; gap: 16px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; color: #F28B8B">! BOTH CHANGED</span>
+<span style="font-size: 18px; font-weight: 600"><span style="font-family: 'JetBrains Mono', monospace">pdf</span> in [project-3]</span>
+<span style="color: #A1A9B4; font-size: 12.5px">Someone edited it in this repo, and the hub has a newer version too.</span>
+</div>
+<div style="border: 1px solid #262B33; border-radius: 10px; overflow: hidden; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7">
+<div style="padding: 8px 12px; background: #1A1E24; color: #A1A9B4; font-family: 'IBM Plex Sans', sans-serif; font-size: 12px">SKILL.md</div>
+<div style="padding: 2px 12px; color: #8A939E">  ## Filling forms</div>
+<div style="padding: 2px 12px; background: rgba(242,139,139,0.10); color: #F5A8A8">- Use pypdf to read fields.</div>
+<div style="padding: 2px 12px; background: rgba(95,211,154,0.10); color: #8FE3B8">+ Use pdfplumber; fall back to OCR.</div>
+<div style="padding: 2px 12px; color: #8A939E">  Always keep the original file.</div>
+<div style="padding: 2px 12px; background: rgba(232,193,90,0.12); color: #EBC968">~ Local: "Ask before overwriting."</div>
+</div>
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="margin-bottom: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.07em; color: #8A939E">KEEP WHICH?</legend>
+
+<label style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 9px; background: rgba(255,154,77,0.08); border: 1px solid rgba(255,154,77,0.45);">
+<input type="radio" name="resolve" checked style="margin-top: 2px; accent-color: #FF9A4D; width: 16px; height: 16px">
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">Merge both</span><span style="font-size: 12px; color: #A1A9B4">Open a 3-way merge, then save to hub and repo.</span></span>
+</label>
+
+<label style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 9px; border: 1px solid #262B33;">
+<input type="radio" name="resolve" style="margin-top: 2px; accent-color: #FF9A4D; width: 16px; height: 16px">
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">Take hub version</span><span style="font-size: 12px; color: #A1A9B4">Overwrite the local edit in [project-3].</span></span>
+</label>
+
+<label style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 9px; border: 1px solid #262B33;">
+<input type="radio" name="resolve" style="margin-top: 2px; accent-color: #FF9A4D; width: 16px; height: 16px">
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">Keep local, push to hub</span><span style="font-size: 12px; color: #A1A9B4">Every other project then shows an update.</span></span>
+</label>
+
+</fieldset>
+<div style="display: flex; gap: 8px; margin-top: auto">
+<button style="flex: 1; height: 38px; border-radius: 8px; border: 1px solid #333944; background: #1C2027; color: #E7E9EC; font: inherit">Skip</button>
+<button style="flex: 2; height: 38px; border-radius: 8px; border: 0; background: #FF9A4D; color: #1F1206; font: inherit; font-weight: 600">Merge in editor</button>
+</div>
+</aside>
+</div>
+</div>
+
+</body>
+</html>

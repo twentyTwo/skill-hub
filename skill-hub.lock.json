@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "skills": {
+    "tech-debt-audit": {
+      "source": {
+        "type": "github",
+        "owner": "ksimback",
+        "repo": "tech-debt-skill",
+        "path": ""
+      },
+      "hash": "b5d40adfb3b364fe",
+      "targets": {
+        "claude": "b5d40adfb3b364fe",
+        "agents": "b5d40adfb3b364fe"
+      },
+      "appliedAt": "2026-10-17T10:29:18.107Z"
+    }
+  }
+}
