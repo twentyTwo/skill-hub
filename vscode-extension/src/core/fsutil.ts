@@ -102,7 +102,7 @@ export async function writeJson(file: string, data: unknown): Promise<void> {
   await fs.mkdir(path.dirname(file), { recursive: true });
   const tmp = `${file}.${process.pid}.tmp`;
   await fs.writeFile(tmp, JSON.stringify(data, null, 2) + '\n', 'utf8');
-  await fs.rename(tmp, file);
+  await renameWithRetry(tmp, file);
 }
 
 export function makeTempDir(prefix = 'skill-hub-'): Promise<string> {
