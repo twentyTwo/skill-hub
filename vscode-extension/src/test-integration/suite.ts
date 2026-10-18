@@ -21,7 +21,7 @@ export async function run(): Promise<void> {
   await config.update('promptForTargets', false, vscode.ConfigurationTarget.Global);
   await config.update('defaultTargets', ['claude', 'cursor'], vscode.ConfigurationTarget.Global);
 
-  const ext = vscode.extensions.getExtension('skill-hub.skill-hub');
+  const ext = vscode.extensions.getExtension('noorashuvo.skill-hub');
   assert.ok(ext, 'extension is installed');
   await ext.activate();
   step('activated');

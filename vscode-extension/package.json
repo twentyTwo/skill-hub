@@ -3,7 +3,7 @@
   "displayName": "Skill Hub",
   "description": "Collect AI agent skills from anywhere (GitHub, any git repo, URLs, local folders) and apply them to any repository for Claude Code, GitHub Copilot, Cursor or AGENTS.md.",
   "version": "0.3.0",
-  "publisher": "skill-hub",
+  "publisher": "noorashuvo",
   "license": "MIT",
   "icon": "media/icon.png",
   "repository": {
