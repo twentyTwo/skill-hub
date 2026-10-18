@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Eight built-in skills in the Library: `code-review`, `commit-message`, `pr-description`, `write-tests`, `debug-systematically`, `security-review`, `refactor-safely` and `write-docs`. They're read-only; **Copy to Hub to Edit** makes your own copy.
+- Fixed: on Windows, saving `skill-hub.lock.json` could fail with `EPERM` while antivirus or the indexer held the file.
+
 ## 0.3.0
 
 - New sidebar with three tabs. **This repo** groups skills by what needs attention and shows one action per skill. **Library** has filters, source groups and applied-here markers. **Discover** searches GitHub.

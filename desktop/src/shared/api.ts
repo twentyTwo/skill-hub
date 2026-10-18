@@ -17,9 +17,9 @@ export interface TargetVM {
 }
 
 export interface SourceVM {
-  /** github | git | url | local | created */
+  /** github | git | url | local | created | builtin */
   type: string;
-  /** "GitHub", "Git", "Link", "Local", "Created". */
+  /** "GitHub", "Git", "Link", "Local", "Created", "Built-in". */
   kind: string;
   /** Short label: `owner/repo`, a host, or a folder. Skills with the same label are grouped as one source. */
   label: string;
@@ -59,6 +59,8 @@ export interface HubSkillVM {
   skillFile?: string;
   source: SourceVM;
   canUpdate: boolean;
+  /** Ships with the app: it can be applied, or copied to the hub to edit, but not edited or removed in place. */
+  builtin: boolean;
   hash: string;
   updatedAt: string;
   usedIn: UsageVM[];
@@ -256,6 +258,8 @@ export interface Api {
   review(id: string): Promise<ReviewVM>;
   updateFromSource(ids: string[]): Promise<{ changed: string[]; failed: string[] }>;
   deleteSkill(id: string): Promise<void>;
+  /** Copies a built-in skill into the hub; returns the copy's SKILL.md. */
+  customizeSkill(id: string): Promise<string>;
 
   // Settings
   saveSettings(patch: Partial<Omit<SettingsVM, 'github'>>): Promise<void>;

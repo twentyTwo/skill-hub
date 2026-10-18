@@ -8,6 +8,7 @@ const FILTERS: { id: LibraryFilter; label: string; test: (s: HubSkillVM) => bool
   { id: 'all', label: 'All sources', test: () => true },
   { id: 'github', label: 'GitHub', test: (s) => s.source.type === 'github' },
   { id: 'local', label: 'Local', test: (s) => s.source.type === 'local' || s.source.type === 'created' },
+  { id: 'builtin', label: 'Built-in', test: (s) => s.builtin },
   { id: 'update', label: 'Has update', test: (s) => s.check?.state === 'newer' },
   { id: 'unused', label: 'Unused', test: (s) => s.usedIn.length === 0 },
 ];
@@ -159,13 +160,15 @@ export function libraryInspector(app: AppState): Html | undefined {
     <div class="insp__foot">
       <button class="sh-btn sh-btn--primary sh-btn--block" data-act="apply-dialog" data-id="${s.id}">Apply to projects…</button>
       <div class="insp__row">
-        <button class="sh-btn" data-act="edit-skill" data-path="${s.skillFile ?? s.dir}">Edit</button>
-        <button class="sh-btn" data-act="open-folder" data-path="${s.dir}">Open in VS Code</button>
+        ${s.builtin
+          ? html`<button class="sh-btn" data-act="customize-skill" data-id="${s.id}" title="Copy it to your hub, where you can edit it">Copy to hub to edit</button>`
+          : html`<button class="sh-btn" data-act="edit-skill" data-path="${s.skillFile ?? s.dir}">Edit</button>
+              <button class="sh-btn" data-act="open-folder" data-path="${s.dir}">Open in VS Code</button>`}
       </div>
       <div class="insp__links">
         <button data-act="reveal" data-path="${s.skillFile ?? s.dir}">Show in folder</button>
         ${s.canUpdate && check?.state !== 'checking' && html`<button data-act="check-source" data-id="${s.id}">Check source</button>`}
-        <button class="danger" data-act="delete-skill" data-id="${s.id}">Remove from hub</button>
+        ${!s.builtin && html`<button class="danger" data-act="delete-skill" data-id="${s.id}">Remove from hub</button>`}
       </div>
     </div>`;
 }
@@ -201,6 +204,14 @@ on('check-source', (el) => {
 });
 on('edit-skill', (el) => void attempt(() => call('openInEditor', attr(el, 'data-path'))));
 on('add-skill', () => openAddDialog());
+on('customize-skill', (el) => {
+  const id = attr(el, 'data-id');
+  void attempt(async () => {
+    const file = await call('customizeSkill', id);
+    toast('info', `Copied ${id} to your hub. Your copy now replaces the built-in one.`);
+    await call('openInEditor', file);
+  });
+});
 on('delete-skill', (el) => {
   const id = attr(el, 'data-id');
   const skill = store.app?.skills.find((s) => s.id === id);

@@ -32,6 +32,7 @@ function renderPage(s: DetailState): void {
             <h1 class="dt-name sh-mono">${s.name}</h1>
             ${s.status && statusPill(s.status.status)}
             ${!s.status && s.inHub && html`<span class="sb-tag">In your hub</span>`}
+            ${!s.status && s.builtin && html`<span class="sb-tag">Built-in</span>`}
           </div>
           <div class="dt-meta">
             ${s.source &&
@@ -44,6 +45,7 @@ function renderPage(s: DetailState): void {
         <div class="dt-actions">
           <button class="sh-btn" data-msg="openSkillFile" data-focus="open">Open SKILL.md</button>
           ${s.canCheckSource && html`<button class="sh-btn" data-command="skillHub.updateSkill" data-focus="check">Check source</button>`}
+          ${s.builtin && html`<button class="sh-btn" data-command="skillHub.customizeSkill" data-focus="customize" title="Copy this skill to your hub so you can edit it">Copy to hub to edit</button>`}
           ${statusAction ? html`${applyButton}<button class="sh-btn sh-btn--primary" data-command="${statusAction.command}" data-focus="status">${statusAction.label}</button>` : applyButton}
         </div>
       </header>

@@ -37,6 +37,8 @@ export function sourceVM(source: SkillSource): SourceVM {
       return { ...base, kind: 'Local', label: tildify(path.dirname(source.path)), subPath: path.basename(source.path) };
     case 'created':
       return { ...base, kind: 'Created', label: 'Created in Skill Hub' };
+    case 'builtin':
+      return { ...base, kind: 'Built-in', label: 'Comes with Skill Hub' };
   }
 }
 

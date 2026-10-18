@@ -4,7 +4,9 @@ export type SkillSource =
   | { type: 'git'; url: string; ref?: string; path: string }
   | { type: 'url'; url: string }
   | { type: 'local'; path: string }
-  | { type: 'created' };
+  | { type: 'created' }
+  /** Ships with Skill Hub, in the app's `builtin-skills/<id>` folder. */
+  | { type: 'builtin'; id: string };
 
 export interface SkillMeta {
   name: string;
@@ -20,4 +22,6 @@ export interface LibrarySkill extends SkillMeta {
   updatedAt: string;
   /** Content hash of the skill folder. */
   hash: string;
+  /** A built-in skill read from the app's own folder, not the hub: it can be applied but not edited or removed. */
+  builtin?: true;
 }

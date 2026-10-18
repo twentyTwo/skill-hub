@@ -24,6 +24,8 @@ export type SourceSpec =
 /** Hosts where a bare `https://host/owner/repo` link is a git repository. */
 const GIT_HOSTS = new Set(['gitlab.com', 'bitbucket.org', 'codeberg.org', 'gitea.com', 'git.sr.ht']);
 const FILE_LINK = /\.(md|mdc|markdown|txt)$/i;
+/** Where the built-in skills are published, for "open source" links. */
+const BUILTIN_SKILLS_URL = 'https://github.com/twentyTwo/skill-hub/tree/main/vscode-extension/builtin-skills';
 
 /**
  * Understands what people paste:
@@ -124,11 +126,13 @@ export function createProvider(spec: SourceSpec | SkillSource, http: Http): Skil
       return new LocalProvider(path.resolve(spec.path));
     case 'created':
       throw new Error('This skill was created in Skill Hub, so it has no source to update from.');
+    case 'builtin':
+      throw new Error('Built-in skills come with Skill Hub and update when Skill Hub does.');
   }
 }
 
 export function canUpdate(source: SkillSource): boolean {
-  return source.type !== 'created';
+  return source.type !== 'created' && source.type !== 'builtin';
 }
 
 export function describeSource(source: SkillSource): string {
@@ -143,6 +147,8 @@ export function describeSource(source: SkillSource): string {
       return source.path;
     case 'created':
       return 'Created in Skill Hub';
+    case 'builtin':
+      return `Built into Skill Hub (${source.id})`;
   }
 }
 
@@ -157,6 +163,8 @@ export function sourceWebUrl(source: SkillSource): string | undefined {
       return /^https?:\/\//i.test(source.url) ? source.url.replace(/\.git$/i, '') : undefined;
     case 'url':
       return source.url;
+    case 'builtin':
+      return `${BUILTIN_SKILLS_URL}/${encodeURIComponent(source.id)}`;
     default:
       return undefined;
   }
@@ -186,6 +194,7 @@ export async function importSkill(provider: SkillProvider, remote: RemoteSkill, 
 
 /** Re-fetches a skill from where it came from and stores it in the hub as `id`. */
 export async function fetchFromSource(source: SkillSource, id: string, library: Library, http: Http): Promise<LibrarySkill> {
+  if (source.type === 'builtin') return library.copyBuiltin(source.id, id);
   const provider = createProvider(source, http);
   try {
     return await importSkill(provider, findSourceSkill(await provider.list(), source), library, id);

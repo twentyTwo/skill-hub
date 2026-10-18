@@ -28,6 +28,7 @@ const METHODS: readonly ApiMethod[] = [
   'review',
   'updateFromSource',
   'deleteSkill',
+  'customizeSkill',
   'saveSettings',
   'pickLibraryFolder',
   'setGitHubToken',
@@ -89,6 +90,7 @@ async function start(): Promise<void> {
 
   backend = new Backend({
     dataDir: app.getPath('userData'),
+    builtinDir: path.join(__dirname, '..', 'builtin-skills'),
     version: app.getVersion(),
     emit: send,
     secrets: safeStorage.isEncryptionAvailable()

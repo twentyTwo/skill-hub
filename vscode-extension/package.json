@@ -161,6 +161,12 @@
         "icon": "$(sync)"
       },
       {
+        "command": "skillHub.customizeSkill",
+        "title": "Copy to Hub to Edit",
+        "category": "Skill Hub",
+        "icon": "$(edit)"
+      },
+      {
         "command": "skillHub.deleteSkill",
         "title": "Remove Skill from Hub",
         "category": "Skill Hub",
@@ -372,13 +378,18 @@
           "group": "2_open@4"
         },
         {
+          "command": "skillHub.customizeSkill",
+          "when": "view == skillHub.library && viewItem =~ /\\bbuiltin\\b/",
+          "group": "3_update@0"
+        },
+        {
           "command": "skillHub.updateSkill",
           "when": "view == skillHub.library && viewItem =~ /\\bupdatable\\b/",
           "group": "3_update@1"
         },
         {
           "command": "skillHub.deleteSkill",
-          "when": "view == skillHub.library && viewItem =~ /\\blibrarySkill\\b/",
+          "when": "view == skillHub.library && viewItem =~ /\\bremovable\\b/",
           "group": "4_remove@1"
         },
         {
@@ -504,6 +515,10 @@
         {
           "command": "skillHub.workspace.resolve",
           "when": "false"
+        },
+        {
+          "command": "skillHub.customizeSkill",
+          "when": "false"
         }
       ],
       "webview/context": [
@@ -538,13 +553,18 @@
           "group": "2_open@5"
         },
         {
+          "command": "skillHub.customizeSkill",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill' && skillHubFlags =~ /\\bbuiltin\\b/",
+          "group": "3_update@0"
+        },
+        {
           "command": "skillHub.updateSkill",
           "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill' && skillHubFlags =~ /\\bupdatable\\b/",
           "group": "3_update@1"
         },
         {
           "command": "skillHub.deleteSkill",
-          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill'",
+          "when": "webviewId == 'skillHub.main' && webviewSection == 'librarySkill' && skillHubFlags =~ /\\bremovable\\b/",
           "group": "4_remove@1"
         },
         {

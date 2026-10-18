@@ -12,6 +12,7 @@ const SOURCE_ICONS: Record<SkillSource['type'], string> = {
   url: 'globe',
   local: 'folder',
   created: 'sparkle',
+  builtin: 'package',
 };
 
 export function isLibrarySkill(value: unknown): value is LibrarySkill {
@@ -73,7 +74,14 @@ export class LibraryView implements vscode.TreeDataProvider<LibrarySkill>, vscod
 
 /** Space-separated flags matched by the `viewItem =~ /\bflag\b/` menu conditions in package.json. */
 export function libraryFlags(skill: LibrarySkill): string {
-  return ['librarySkill', canUpdate(skill.source) && 'updatable', sourceWebUrl(skill.source) && 'web'].filter(Boolean).join(' ');
+  return [
+    'librarySkill',
+    skill.builtin ? 'builtin' : 'removable',
+    canUpdate(skill.source) && 'updatable',
+    sourceWebUrl(skill.source) && 'web',
+  ]
+    .filter(Boolean)
+    .join(' ');
 }
 
 function tooltip(skill: LibrarySkill): vscode.MarkdownString {

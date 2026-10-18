@@ -54,6 +54,13 @@ export async function run(): Promise<void> {
   assert.deepEqual(Object.keys((await readLock(workspace)).skills['review-checklist'].targets).sort(), ['claude', 'cursor']);
   step('applied to workspace for Claude Code and Cursor');
 
+  // Built-in skills ship with the extension and apply like hub skills, recording where they came from.
+  await vscode.commands.executeCommand('skillHub.applySkill', { refKind: 'library', refId: 'commit-message' });
+  assert.ok(await exists(path.join(workspace, '.claude/skills/commit-message/SKILL.md')), 'built-in installed for Claude Code');
+  assert.deepEqual((await readLock(workspace)).skills['commit-message'].source, { type: 'builtin', id: 'commit-message' });
+  assert.ok(!(await exists(path.join(hubDir, 'skills', 'commit-message'))), 'built-in not copied into the hub');
+  step('applied a built-in skill');
+
   // Change the hub copy, then update the workspace from it.
   await fs.writeFile(path.join(skill.dir, 'SKILL.md'), '---\nname: review-checklist\ndescription: Checklist for code reviews, v2.\n---\n\n# Review v2\n');
   await vscode.commands.executeCommand('skillHub.refresh');

@@ -65,6 +65,8 @@ export interface Host {
   openPath(target: string): Promise<void>;
   reveal(target: string): void;
   openExternal(url: string): Promise<void>;
+  /** Folder of the skills that ship with the app. */
+  builtinDir?: string;
 }
 
 interface Staged {
@@ -186,6 +188,7 @@ export class Backend implements Api {
         skillFile: await findSkillFile(skill.dir),
         source: sourceVM(skill.source),
         canUpdate: canUpdate(skill.source),
+        builtin: !!skill.builtin,
         hash: skill.hash,
         updatedAt: skill.updatedAt,
         usedIn: usage.get(skill.id) ?? [],
@@ -233,7 +236,7 @@ export class Backend implements Api {
   }
 
   private openLibrary(): void {
-    this.library = new Library(this.store.libraryRoot());
+    this.library = new Library(this.store.libraryRoot(), this.host.builtinDir);
     try {
       // Exists up front so it can be watched.
       mkdirSync(this.library.skillsDir, { recursive: true });
@@ -726,6 +729,15 @@ export class Backend implements Api {
       else this.toast('info', text);
     }
     return { changed, failed };
+  }
+
+  /** Copies a built-in skill into the hub so it can be edited; the copy replaces the built-in one. */
+  async customizeSkill(id: string): Promise<string> {
+    return this.run(`Copying ${id} to the hub`, async () => {
+      const copy = await this.library.copyBuiltin(id);
+      this.store.log('add', `Copied built-in skill ${id} to the hub to edit it`);
+      return (await findSkillFile(copy.dir)) ?? copy.dir;
+    });
   }
 
   async deleteSkill(id: string): Promise<void> {

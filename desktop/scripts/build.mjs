@@ -1,7 +1,7 @@
 // Bundles the main process, preload (Node) and the renderer script and stylesheet (browser) into dist/.
 // Usage: node scripts/build.mjs [--watch] [--production]
 import * as esbuild from 'esbuild';
-import { copyFile, mkdir } from 'fs/promises';
+import { copyFile, cp, mkdir, rm } from 'fs/promises';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -42,6 +42,9 @@ await mkdir('dist/renderer', { recursive: true });
 await copyFile('src/renderer/index.html', 'dist/renderer/index.html');
 // Window icon; build/icon.png is also what electron-builder turns into the installer icons.
 await copyFile('build/icon.png', 'dist/icon.png');
+// The skills that ship with the app; the extension keeps the only copy in the repository.
+await rm('dist/builtin-skills', { recursive: true, force: true });
+await cp('../vscode-extension/builtin-skills', 'dist/builtin-skills', { recursive: true });
 
 if (watch) {
   for (const options of builds) await (await esbuild.context(options)).watch();

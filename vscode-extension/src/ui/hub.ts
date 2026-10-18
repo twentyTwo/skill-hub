@@ -23,14 +23,15 @@ export class Hub implements vscode.Disposable {
   private timer: NodeJS.Timeout | undefined;
   private activeRoot: string | undefined;
 
-  constructor() {
-    this.lib = createLibrary();
+  /** `builtinRoot`: the skills that ship with the extension. */
+  constructor(private readonly builtinRoot: string) {
+    this.lib = createLibrary(builtinRoot);
     this.watch();
     this.disposables.push(
       this.changed,
       vscode.workspace.onDidChangeConfiguration((e) => {
         if (!e.affectsConfiguration('skillHub')) return;
-        if (e.affectsConfiguration('skillHub.libraryPath')) this.lib = createLibrary();
+        if (e.affectsConfiguration('skillHub.libraryPath')) this.lib = createLibrary(this.builtinRoot);
         this.watch();
         this.refresh(true);
       }),
@@ -141,14 +142,14 @@ export class Hub implements vscode.Disposable {
   }
 }
 
-function createLibrary(): Library {
+function createLibrary(builtinRoot: string): Library {
   const configured = vscode.workspace.getConfiguration('skillHub').get<string>('libraryPath')?.trim();
   const root = !configured
     ? path.join(os.homedir(), '.skill-hub')
     : /^~([\\/]|$)/.test(configured)
       ? path.join(os.homedir(), configured.slice(1))
       : path.resolve(configured);
-  const library = new Library(root);
+  const library = new Library(root, builtinRoot);
   try {
     // Exists up front so the file watcher has something to watch.
     mkdirSync(library.skillsDir, { recursive: true });

@@ -197,7 +197,20 @@ export class Actions {
 
   async openSkill(arg?: unknown): Promise<void> {
     const [skill] = isLibrarySkill(arg) ? [arg] : ((await this.pickLibrarySkills('Open Skill', false)) ?? []);
-    if (skill) await vscode.window.showTextDocument(await skillFileUri(skill.dir), { preview: true });
+    if (!skill) return;
+    await vscode.window.showTextDocument(await skillFileUri(skill.dir), { preview: true });
+    // Built-in skills live in the extension's own folder; edits belong in a hub copy.
+    if (skill.builtin) await vscode.commands.executeCommand('workbench.action.files.setActiveEditorReadonlyInSession');
+  }
+
+  /** Copies a built-in skill into the hub so it can be edited, then opens the copy. */
+  async customizeSkill(arg?: unknown): Promise<void> {
+    const [skill] = isLibrarySkill(arg) ? [arg] : ((await this.pickLibrarySkills('Copy to Hub to Edit', false, (s) => !!s.builtin)) ?? []);
+    if (!skill?.builtin) return;
+    const copy = await this.hub.library.copyBuiltin(skill.id);
+    this.hub.refresh(true);
+    await vscode.window.showTextDocument(await skillFileUri(copy.dir));
+    void vscode.window.showInformationMessage(`Copied "${skill.name}" to your hub. Your copy now replaces the built-in one; remove it to go back.`);
   }
 
   async previewSkill(arg?: unknown): Promise<void> {
@@ -219,8 +232,13 @@ export class Actions {
   }
 
   async deleteSkill(arg?: unknown, selected?: unknown): Promise<void> {
-    const skills = selection(arg, selected, isLibrarySkill) ?? (await this.pickLibrarySkills('Remove Skills from Hub'));
-    if (!skills?.length) return;
+    const picked = selection(arg, selected, isLibrarySkill) ?? (await this.pickLibrarySkills('Remove Skills from Hub', true, (s) => !s.builtin));
+    if (!picked?.length) return;
+    const skills = picked.filter((s) => !s.builtin);
+    if (!skills.length) {
+      void vscode.window.showInformationMessage("Built-in skills come with Skill Hub and can't be removed.");
+      return;
+    }
     const what = skills.length === 1 ? `"${skills[0].name}"` : `${skills.length} skills`;
     const choice = await vscode.window.showWarningMessage(
       `Remove ${what} from your hub?`,

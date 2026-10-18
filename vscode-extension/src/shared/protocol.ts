@@ -53,7 +53,7 @@ export interface LibrarySkillVM {
   id: string;
   name: string;
   description: string;
-  /** Short source badge (`gh`, `git`, `url`, `local`, `new`) and label, used to group the Library. */
+  /** Short source badge (`gh`, `git`, `url`, `local`, `new`, `built-in`) and label, used to group the Library. */
   sourceBadge: string;
   sourceLabel: string;
   appliedHere: boolean;
@@ -119,6 +119,8 @@ export interface DetailState {
   dateLabel?: string;
   hash?: string;
   inHub: boolean;
+  /** Shown from the built-in copy: it can be applied, or copied to the hub to edit it. */
+  builtin: boolean;
   canCheckSource: boolean;
   canApply: boolean;
   applyLabel: string;

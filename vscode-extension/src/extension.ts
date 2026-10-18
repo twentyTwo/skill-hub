@@ -11,7 +11,7 @@ import { StatusBar } from './ui/statusBar';
 import { isWorkspaceNode, WorkspaceView } from './ui/workspaceView';
 
 export function activate(context: vscode.ExtensionContext): void {
-  const hub = new Hub();
+  const hub = new Hub(context.asAbsolutePath('builtin-skills'));
   const actions = new Actions(hub);
   const panels = new SkillPanels(hub, actions, context.extensionUri);
   const sidebar = new SidebarView(hub, actions, panels, context.extensionUri);
@@ -51,6 +51,7 @@ export function activate(context: vscode.ExtensionContext): void {
     'skillHub.updateSkill': (arg?: unknown, selected?: unknown) => actions.updateSkill(arg, selected),
     'skillHub.updateAllSkills': () => actions.updateAllSkills(),
     'skillHub.deleteSkill': (arg?: unknown, selected?: unknown) => actions.deleteSkill(arg, selected),
+    'skillHub.customizeSkill': (arg?: unknown) => actions.customizeSkill(arg),
     'skillHub.openLibraryFolder': () => actions.openLibraryFolder(),
     'skillHub.refresh': async () => hub.refresh(true),
     'skillHub.showRepo': () =>

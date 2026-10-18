@@ -180,6 +180,8 @@ export function sourceGroup(source: SkillSource): { badge: string; label: string
     }
     case 'created':
       return { badge: 'new', kind: 'Created', label: 'Created in Skill Hub' };
+    case 'builtin':
+      return { badge: 'built-in', kind: 'Built-in', label: 'Comes with Skill Hub' };
   }
 }
 
@@ -189,7 +191,7 @@ export async function detailState(hub: Hub, id: string, folder: vscode.Workspace
   const local = folder ? (await hub.workspaceSkills(folder).catch(() => [])).find((s) => s.id === id) : undefined;
   const targets = hub.targets();
   if (!hubSkill && !local) {
-    return { name: id, description: '', inHub: false, canCheckSource: false, canApply: false, applyLabel: '', targets: [], files: [], gone: true };
+    return { name: id, description: '', inHub: false, builtin: false, canCheckSource: false, canApply: false, applyLabel: '', targets: [], files: [], gone: true };
   }
 
   const source = local?.lock?.source ?? hubSkill?.source;
@@ -209,7 +211,8 @@ export async function detailState(hub: Hub, id: string, folder: vscode.Workspace
     source: source && group && source.type !== 'created' ? { kind: group.kind, text: group.label, url: sourceWebUrl(source) } : undefined,
     dateLabel: local?.lock ? `Applied ${formatDate(local.lock.appliedAt)}` : hubSkill ? `Updated ${formatDate(hubSkill.updatedAt)}` : undefined,
     hash: (local?.lock?.hash ?? hubSkill?.hash)?.slice(0, 8),
-    inHub: !!hubSkill,
+    inHub: !!hubSkill && !hubSkill.builtin,
+    builtin: !!hubSkill?.builtin,
     canCheckSource: !!hubSkill && canUpdate(hubSkill.source),
     // An untracked skill that isn't in the hub has to be added to the hub first (its status action).
     canApply: !!folder && (!!hubSkill || applied),
@@ -230,7 +233,7 @@ export async function detailState(hub: Hub, id: string, folder: vscode.Workspace
     files: dir ? (await listFiles(dir)).slice(0, 200) : [],
     remove: local
       ? { label: `Remove from ${folder!.name}`, command: 'skillHub.workspace.remove' }
-      : hubSkill
+      : hubSkill && !hubSkill.builtin
         ? { label: 'Remove from hub', command: 'skillHub.deleteSkill' }
         : undefined,
   };

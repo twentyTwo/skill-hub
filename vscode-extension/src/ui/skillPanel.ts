@@ -20,6 +20,7 @@ const DETAIL_COMMANDS: Record<string, 'workspace' | 'library'> = {
   'skillHub.workspace.remove': 'workspace',
   'skillHub.updateSkill': 'library',
   'skillHub.deleteSkill': 'library',
+  'skillHub.customizeSkill': 'library',
 };
 
 /** The skill detail pages (design §3.2): one editor tab per skill and folder. */

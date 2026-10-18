@@ -2,7 +2,7 @@
 import type { AppState, ConflictVM, SearchResultVM } from '../shared/api';
 
 export type View = 'library' | 'discover' | 'projects' | 'sources' | 'activity' | 'settings' | 'project';
-export type LibraryFilter = 'all' | 'github' | 'local' | 'update' | 'unused';
+export type LibraryFilter = 'all' | 'github' | 'local' | 'builtin' | 'update' | 'unused';
 export type ConflictChoice = 'merge' | 'hub' | 'local';
 
 export type DiscoverState =
