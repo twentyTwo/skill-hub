@@ -43,7 +43,7 @@ jobs:
       vsix: ${{ steps.version.outputs.vsix }}
       should_publish: ${{ steps.version.outputs.should_publish }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -68,7 +68,7 @@ jobs:
             echo "Publishing $TAG"
           fi
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         if: steps.version.outputs.should_publish == 'true'
         with:
           node-version: 22
@@ -100,7 +100,7 @@ jobs:
           EOF
           cat release-notes.md
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: steps.version.outputs.should_publish == 'true'
         with:
           name: release-${{ steps.version.outputs.version }}
@@ -117,7 +117,7 @@ jobs:
       name: VS Code Marketplace
       url: https://marketplace.visualstudio.com/items?itemName=noorashuvo.skill-hub
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: release-${{ needs.build.outputs.version }}
 
@@ -131,7 +131,7 @@ jobs:
           fi
 
       - name: Publish
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         env:
           VSCE_PAT: ${{ secrets.VSC_PAT }}
         with:
@@ -148,7 +148,7 @@ jobs:
       name: Open VSX
       url: https://open-vsx.org/extension/noorashuvo/skill-hub
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: release-${{ needs.build.outputs.version }}
 
@@ -162,7 +162,7 @@ jobs:
           fi
 
       - name: Publish
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         env:
           OVSX_PAT: ${{ secrets.OPENVSX_PAT }}
         with:
@@ -179,11 +179,11 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: release-${{ needs.build.outputs.version }}
 
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.build.outputs.tag }}
           target_commitish: ${{ github.sha }}
