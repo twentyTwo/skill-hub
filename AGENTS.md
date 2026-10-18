@@ -1,3 +1,26 @@
+## Branches
+
+Never commit to `main` directly. For every feature, bug fix or improvement, start a new branch from the latest `main`:
+
+```sh
+git fetch origin
+git switch -c <type>/<short-name> origin/main
+```
+
+| Type | Use for | Example |
+|---|---|---|
+| `feature/` | New functionality | `feature/builtin-skills` |
+| `fix/` | Bug fixes | `fix/lock-file-eperm` |
+| `improve/` | Improvements to existing behavior, performance or UX | `improve/library-search` |
+| `refactor/` | Code changes that don't change behavior | `refactor/split-actions` |
+| `docs/` | Documentation only | `docs/readme-screenshots` |
+| `chore/` | Build, CI, dependencies, tooling | `chore/bump-esbuild` |
+
+- Use lowercase kebab-case names that say what the change is, not who made it or a ticket number alone.
+- One branch per change. Don't pile unrelated work onto an existing branch.
+- If the working tree has uncommitted changes when starting, ask before carrying them onto the new branch.
+- When the work is done, push the branch and open a pull request into `main`. Merging to `main` runs the release workflow, which publishes only when the version in `vscode-extension/package.json` is new.
+
 <!-- skill-hub:begin -->
 ## Skills
 
