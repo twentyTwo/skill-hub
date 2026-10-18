@@ -17,16 +17,28 @@ A **skill** is a folder with a `SKILL.md` (YAML frontmatter with `name` and `des
 Open the **Skill Hub** icon in the Activity Bar. The sidebar has three tabs:
 
 - **This repo**: the open repository, the agents it has skills for, and every skill in it, grouped into *Needs attention*, *Applied* and *Found, not tracked*. Each row shows its status and at most one action (Update, Save to hub, Resolve…, Restore or Add to hub). Drag skills from the Library onto the drop zone to apply them. In a multi-root workspace, pick the folder from the repo card.
-- **Library**: every skill in your hub, grouped by source. Filter by text, *Applied here* or *Has update*. An orange dot means the skill is applied here, and `→` applies it.
+- **Library**: every skill in your hub, grouped by source, plus the built-in skills. Filter by text, *Applied here* or *Has update*. An orange dot means the skill is applied here, and `→` applies it.
 - **Discover**: search GitHub for skills and add them in one click.
+
+![The This repo tab and the detail page of a skill with an update](https://raw.githubusercontent.com/twentyTwo/skill-hub/main/docs/screenshots/vscode-repo.png)
 
 Click any skill to open its **detail page**. It shows the skill's status, which agents it's installed for (with **+ Install here** for the others), a preview of its `SKILL.md`, and its files. Right-click a skill in the sidebar for everything else.
 
 The Activity Bar badge counts skills with an update, a conflict or missing files. The status bar shows the same for the open repository.
 
+## Built-in skills
+
+Skill Hub comes with eight general-purpose skills, listed in the Library under **built-in**: `code-review`, `commit-message`, `pr-description`, `write-tests`, `debug-systematically`, `security-review`, `refactor-safely` and `write-docs`. Apply them like any other skill. Their source in `skill-hub.lock.json` is `builtin`, so a teammate's Skill Hub restores them from its own copy.
+
+![The Library tab with the built-in skills, and a built-in skill's detail page](https://raw.githubusercontent.com/twentyTwo/skill-hub/main/docs/screenshots/vscode-library.png)
+
+Built-in skills are read-only. To change one, right-click it and choose **Copy to Hub to Edit** (or use the button on its detail page). Your copy then replaces the built-in one; remove it from your hub to go back. When a new version of Skill Hub changes a built-in skill, repositories that use it show **Update available**.
+
 ## Adding skills
 
 Click **+** in the sidebar to open the **Add skills** page, then paste almost anything. As you type, it tells you what it detected (GitHub repository, git URL, file link, local path or search words). Press Enter to list the skills, tick the ones you want, and optionally apply them to this repository in the same step.
+
+![The Add skills page listing the skills found in anthropics/skills](https://raw.githubusercontent.com/twentyTwo/skill-hub/main/docs/screenshots/vscode-add.png)
 
 | You paste | What happens |
 |---|---|

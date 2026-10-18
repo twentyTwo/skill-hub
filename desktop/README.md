@@ -4,9 +4,13 @@ A desktop app for the same hub the [VS Code extension](../vscode-extension) uses
 
 It follows `design/DESIGN.md` §4 and the `03-desktop-library` and `04-desktop-projects` mockups.
 
+![Library: every skill in the hub as a grid, with the inspector](../docs/screenshots/desktop-library.png)
+
+![Projects: each skill's status in each project](../docs/screenshots/desktop-projects.png)
+
 ## What it does
 
-- **Library**: every skill in your hub, as a grid or a list. You can filter by source, by *Has update* or by *Unused*. The inspector shows where a skill came from, whether its source has a newer version (with **Review changes** and **Update**), and every project that uses it. **Apply to projects…** copies it into any of them.
+- **Library**: every skill in your hub plus the app's built-in skills, as a grid or a list. You can filter by source, *Built-in*, *Has update* or *Unused*. Built-in skills are read-only; **Copy to hub to edit** makes your own copy, which replaces the built-in one. The inspector shows where a skill came from, whether its source has a newer version (with **Review changes** and **Update**), and every project that uses it. **Apply to projects…** copies it into any of them.
 - **Projects**: one row per project folder you've added and one column per hub skill. Each cell shows that skill's status in that project (✓ ↑ ✎ ! ×), or a dashed **+** that applies it. **Update all safe** updates everything that's *outdated* or *missing*. It never touches *edited* or *both changed* skills, because those need a decision.
 - **Both changed**: when a skill was edited in a project and the hub moved on too, its cell opens a diff and three choices:
   - **Merge both** writes both versions into the project's copy, marking each difference with `<<<<<<<` / `>>>>>>>`, and opens it in your editor. When you've settled them, choose **Keep local, push to hub**.

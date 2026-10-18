@@ -6,6 +6,27 @@
 
 Keep one library of AI agent skills (`SKILL.md` folders), collected from anywhere, and apply them to your repositories for Claude Code, GitHub Copilot, Cursor, AGENTS.md-based agents, or any folder you configure.
 
+![The Skill Hub sidebar in VS Code: the Library with built-in skills, and a skill's detail page](docs/screenshots/vscode-library.png)
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/vscode-repo.png" alt="This repo tab: skills grouped by what needs attention, and the detail page of a skill with an update"></td>
+    <td width="50%"><img src="docs/screenshots/vscode-add.png" alt="Add skills page listing the skills found in anthropics/skills"></td>
+  </tr>
+  <tr>
+    <td>VS Code: what this repository has, and what needs attention</td>
+    <td>VS Code: paste a repo, tick the skills you want</td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/desktop-library.png" alt="Desktop app Library grid with the inspector"></td>
+    <td width="50%"><img src="docs/screenshots/desktop-projects.png" alt="Desktop app Projects matrix showing each skill's status in each project"></td>
+  </tr>
+  <tr>
+    <td>Desktop: the whole library</td>
+    <td>Desktop: every project's skills in one matrix</td>
+  </tr>
+</table>
+
 There are two apps. They share one hub (`~/.skill-hub`) and the same `skill-hub.lock.json` in each repository:
 
 | Folder | What it is |
