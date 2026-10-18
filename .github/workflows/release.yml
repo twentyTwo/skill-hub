@@ -1,0 +1,212 @@
+name: Release
+
+# Every push to main is tested. It is published only when vscode-extension/package.json has a version
+# that has no v<version> tag yet, so bumping the version (and adding a CHANGELOG section) is what releases.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      publish_vscode:
+        description: Publish to the VS Code Marketplace
+        type: boolean
+        default: true
+      publish_openvsx:
+        description: Publish to Open VSX
+        type: boolean
+        default: true
+      force_publish:
+        description: Publish even if this version's tag already exists
+        type: boolean
+        default: false
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  build:
+    needs: ci
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vscode-extension
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+      vsix: ${{ steps.version.outputs.vsix }}
+      should_publish: ${{ steps.version.outputs.should_publish }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Decide whether to publish
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          NAME=$(node -p "require('./package.json').name")
+          TAG="v$VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "vsix=$NAME-$VERSION.vsix" >> "$GITHUB_OUTPUT"
+          if [[ "$VERSION" == *-* ]]; then
+            echo "::error::$VERSION is a prerelease version. The marketplaces need major.minor.patch; use develop for betas."
+            exit 1
+          fi
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null && [ "${{ inputs.force_publish }}" != "true" ]; then
+            echo "should_publish=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Nothing to publish::$TAG is already released. Bump the version in vscode-extension/package.json to publish."
+          else
+            echo "should_publish=true" >> "$GITHUB_OUTPUT"
+            echo "Publishing $TAG"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.version.outputs.should_publish == 'true'
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: vscode-extension/package-lock.json
+
+      - name: Package VSIX
+        if: steps.version.outputs.should_publish == 'true'
+        run: |
+          npm ci
+          npm run package
+          test -f "${{ steps.version.outputs.vsix }}"
+
+      - name: Release notes from CHANGELOG
+        if: steps.version.outputs.should_publish == 'true'
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          awk -v v="$VERSION" '/^## /{p = ($2 == v); next} p' CHANGELOG.md > release-notes.md
+          if [ ! -s release-notes.md ]; then
+            echo "::warning::CHANGELOG.md has no '## $VERSION' section."
+            echo "Version $VERSION." > release-notes.md
+          fi
+          cat >> release-notes.md <<EOF
+
+          ## Install
+          - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=noorashuvo.skill-hub)
+          - [Open VSX](https://open-vsx.org/extension/noorashuvo/skill-hub) (VSCodium, Cursor, Windsurf)
+          - Or download the \`.vsix\` below and run **Extensions: Install from VSIX…**
+          EOF
+          cat release-notes.md
+
+      - uses: actions/upload-artifact@v4
+        if: steps.version.outputs.should_publish == 'true'
+        with:
+          name: release-${{ steps.version.outputs.version }}
+          path: |
+            vscode-extension/${{ steps.version.outputs.vsix }}
+            vscode-extension/release-notes.md
+          retention-days: 90
+
+  publish-vscode:
+    needs: build
+    if: needs.build.outputs.should_publish == 'true' && (github.event_name != 'workflow_dispatch' || inputs.publish_vscode)
+    runs-on: ubuntu-latest
+    environment:
+      name: VS Code Marketplace
+      url: https://marketplace.visualstudio.com/items?itemName=noorashuvo.skill-hub
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-${{ needs.build.outputs.version }}
+
+      - name: Check token
+        env:
+          VSCE_PAT: ${{ secrets.VSC_PAT }}
+        run: |
+          if [ -z "$VSCE_PAT" ]; then
+            echo "::error::Add the VSC_PAT secret (Azure DevOps token with Marketplace > Manage) to the 'VS Code Marketplace' environment."
+            exit 1
+          fi
+
+      - name: Publish
+        uses: nick-fields/retry@v3
+        env:
+          VSCE_PAT: ${{ secrets.VSC_PAT }}
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          retry_wait_seconds: 30
+          command: npx --yes @vscode/vsce@4 publish --packagePath "${{ needs.build.outputs.vsix }}" --skip-duplicate
+
+  publish-openvsx:
+    needs: build
+    if: needs.build.outputs.should_publish == 'true' && (github.event_name != 'workflow_dispatch' || inputs.publish_openvsx)
+    runs-on: ubuntu-latest
+    environment:
+      name: Open VSX
+      url: https://open-vsx.org/extension/noorashuvo/skill-hub
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-${{ needs.build.outputs.version }}
+
+      - name: Check token
+        env:
+          OVSX_PAT: ${{ secrets.OPENVSX_PAT }}
+        run: |
+          if [ -z "$OVSX_PAT" ]; then
+            echo "::error::Add the OPENVSX_PAT secret to the 'Open VSX' environment."
+            exit 1
+          fi
+
+      - name: Publish
+        uses: nick-fields/retry@v3
+        env:
+          OVSX_PAT: ${{ secrets.OPENVSX_PAT }}
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          retry_wait_seconds: 30
+          command: npx --yes ovsx publish "${{ needs.build.outputs.vsix }}" --skip-duplicate
+
+  github-release:
+    needs: [build, publish-vscode, publish-openvsx]
+    # Runs when nothing failed; a marketplace skipped from a manual run doesn't block it.
+    if: always() && needs.build.outputs.should_publish == 'true' && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-${{ needs.build.outputs.version }}
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.build.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: Skill Hub ${{ needs.build.outputs.tag }}
+          body_path: release-notes.md
+          files: ${{ needs.build.outputs.vsix }}
+
+  summary:
+    needs: [build, publish-vscode, publish-openvsx, github-release]
+    if: always() && needs.build.outputs.should_publish == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report
+        run: |
+          {
+            echo "## Skill Hub ${{ needs.build.outputs.tag }}"
+            echo ""
+            echo "| Step | Result |"
+            echo "|---|---|"
+            echo "| VS Code Marketplace | ${{ needs.publish-vscode.result }} |"
+            echo "| Open VSX | ${{ needs.publish-openvsx.result }} |"
+            echo "| GitHub release | ${{ needs.github-release.result }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ needs.publish-vscode.result }}" = "failure" ] || [ "${{ needs.publish-openvsx.result }}" = "failure" ]; then
+            exit 1
+          fi

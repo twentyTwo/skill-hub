@@ -1,5 +1,9 @@
 # Skill Hub
 
+[![Release](https://github.com/twentyTwo/skill-hub/actions/workflows/release.yml/badge.svg)](https://github.com/twentyTwo/skill-hub/actions/workflows/release.yml)
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/noorashuvo.skill-hub?label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=noorashuvo.skill-hub)
+[![Open VSX](https://img.shields.io/open-vsx/v/noorashuvo/skill-hub?label=Open%20VSX)](https://open-vsx.org/extension/noorashuvo/skill-hub)
+
 Keep one library of AI agent skills (`SKILL.md` folders), collected from anywhere, and apply them to your repositories for Claude Code, GitHub Copilot, Cursor, AGENTS.md-based agents, or any folder you configure.
 
 There are two apps. They share one hub (`~/.skill-hub`) and the same `skill-hub.lock.json` in each repository:
@@ -18,3 +22,17 @@ cd desktop && npm install && npm test
 ```
 
 See each folder's README for details. In VS Code, the launch configurations **Run Extension** and **Run Desktop App** start each one.
+
+## CI and releases
+
+GitHub Actions in [`.github/workflows`](.github/workflows):
+
+| Workflow | Runs on | What it does |
+|---|---|---|
+| `ci.yml` | Pull requests (and as the first step of the two below) | Extension: typecheck and unit tests on Linux and Windows, integration tests in VS Code and a `.vsix` artifact on Linux. Desktop: typecheck and tests. |
+| `release.yml` | Push to `main`, or run by hand | Runs CI, then publishes the extension if `vscode-extension/package.json` has a version with no `v<version>` tag yet: VS Code Marketplace and Open VSX in parallel, then a GitHub release with the `.vsix` and that version's CHANGELOG section. A manual run can pick the marketplaces or republish an existing version. |
+| `beta.yml` | Push to `develop` | Runs CI, then attaches `<version>-beta.<run>` as a `.vsix` to a GitHub pre-release. Betas don't go to the marketplaces. |
+
+To release: bump `version` in `vscode-extension/package.json`, add a `## <version>` section to `vscode-extension/CHANGELOG.md`, and merge to `main`.
+
+Publishing needs two secrets, each in a repository environment of the same name: `VSC_PAT` in **VS Code Marketplace** (an Azure DevOps token with the *Marketplace → Manage* scope) and `OPENVSX_PAT` in **Open VSX**.
