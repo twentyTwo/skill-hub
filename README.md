@@ -1,8 +1,6 @@
 # Skill Hub
 
 [![Release](https://github.com/twentyTwo/skill-hub/actions/workflows/release.yml/badge.svg)](https://github.com/twentyTwo/skill-hub/actions/workflows/release.yml)
-[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/noorashuvo.skill-hub?label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=noorashuvo.skill-hub)
-[![Open VSX](https://img.shields.io/open-vsx/v/noorashuvo/skill-hub?label=Open%20VSX)](https://open-vsx.org/extension/noorashuvo/skill-hub)
 
 Keep one library of AI agent skills (`SKILL.md` folders), collected from anywhere, and apply them to your repositories for Claude Code, GitHub Copilot, Cursor, AGENTS.md-based agents, or any folder you configure.
 
