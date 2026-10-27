@@ -1,0 +1,50 @@
+name: Bug report
+description: Something in Skill Hub doesn't work as expected.
+labels: [bug]
+body:
+  - type: dropdown
+    id: app
+    attributes:
+      label: App
+      options:
+        - VS Code extension
+        - Desktop app
+        - Both
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Skill Hub version
+      description: Shown in the Extensions view, or under About in the desktop app's Settings.
+      placeholder: "0.3.0"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: OS and editor
+      placeholder: "Windows 11, VS Code 1.105"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the source you pasted (for example `anthropics/skills`) and the agents you applied to, if relevant.
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and what happened instead
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Error messages, or errors from Help > Toggle Developer Tools > Console. Remove any tokens first.
