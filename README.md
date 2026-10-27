@@ -54,4 +54,7 @@ GitHub Actions in [`.github/workflows`](.github/workflows):
 
 To release: bump `version` in `vscode-extension/package.json`, add a `## <version>` section to `vscode-extension/CHANGELOG.md`, and merge to `main`.
 
-Publishing needs two secrets, each in a repository environment of the same name: `VSC_PAT` in **VS Code Marketplace** (an Azure DevOps token with the *Marketplace → Manage* scope) and `OPENVSX_PAT` in **Open VSX**.
+Publishing reads its credentials from two repository environments (**Settings → Environments**):
+
+- **VS Code Marketplace**: the variables `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` of a Microsoft Entra app registration. Give the app a federated credential for this repository with entity type *Environment* and the name `VS Code Marketplace`, then add the app as a member of the `noorashuvo` publisher at [marketplace.visualstudio.com/manage](https://marketplace.visualstudio.com/manage). If those variables aren't set, the job falls back to a `VSC_PAT` secret (an Azure DevOps token for *All accessible organizations* with the *Marketplace → Manage* scope), but such global tokens stop working on December 1, 2026.
+- **Open VSX**: a [trusted publisher](https://github.com/eclipse-openvsx/openvsx/wiki/Trusted-Publishing) for `noorashuvo.skill-hub` at [open-vsx.org/user-settings/trusted-publishers](https://open-vsx.org/user-settings/trusted-publishers), pointing at workflow `release.yml` and environment `Open VSX`. No secret is needed. Open VSX only accepts a trusted publisher once the extension has a version, so the very first release instead uses an `OPENVSX_PAT` secret (an [access token](https://open-vsx.org/user-settings/tokens)); delete it after registering the trusted publisher, since a token always takes precedence.
