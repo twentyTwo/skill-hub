@@ -167,29 +167,27 @@ jobs:
     environment:
       name: Open VSX
       url: https://open-vsx.org/extension/noorashuvo/skill-hub
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/download-artifact@v8
         with:
           name: release-${{ needs.build.outputs.version }}
 
-      - name: Check token
+      # Trusted publishing (OIDC) is preferred. Open VSX only accepts a trusted publisher for an extension that
+      # already has a version, so the first release needs OPENVSX_PAT; delete the secret once the trusted
+      # publisher for release.yml and the 'Open VSX' environment is registered.
+      - name: Choose sign-in
+        id: auth
         env:
           OVSX_PAT: ${{ secrets.OPENVSX_PAT }}
         run: |
-          if [ -z "$OVSX_PAT" ]; then
-            echo "::error::Add the OPENVSX_PAT secret to the 'Open VSX' environment."
-            exit 1
-          fi
-
-      # Open VSX rejects the first publish until the publisher's namespace exists.
-      - name: Create namespace if missing
-        env:
-          OVSX_PAT: ${{ secrets.OPENVSX_PAT }}
-        run: |
-          if curl -sf -o /dev/null https://open-vsx.org/api/noorashuvo; then
-            echo "Namespace noorashuvo exists."
+          if [ -n "$OVSX_PAT" ]; then
+            echo "args=" >> "$GITHUB_OUTPUT"
+            echo "::notice::Publishing with OPENVSX_PAT. Register a trusted publisher on open-vsx.org and delete the secret to publish without a token."
           else
-            npx --yes ovsx create-namespace noorashuvo
+            echo "args=--trusted-publishing" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Publish
@@ -200,7 +198,7 @@ jobs:
           timeout_minutes: 5
           max_attempts: 3
           retry_wait_seconds: 30
-          command: npx --yes ovsx publish "${{ needs.build.outputs.vsix }}" --skip-duplicate
+          command: npx --yes ovsx publish "${{ needs.build.outputs.vsix }}" --skip-duplicate ${{ steps.auth.outputs.args }}
 
   github-release:
     needs: [build, publish-vscode, publish-openvsx]
