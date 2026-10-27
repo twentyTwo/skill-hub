@@ -54,4 +54,7 @@ GitHub Actions in [`.github/workflows`](.github/workflows):
 
 To release: bump `version` in `vscode-extension/package.json`, add a `## <version>` section to `vscode-extension/CHANGELOG.md`, and merge to `main`.
 
-Publishing needs two secrets, each in a repository environment of the same name: `VSC_PAT` in **VS Code Marketplace** (an Azure DevOps token with the *Marketplace → Manage* scope) and `OPENVSX_PAT` in **Open VSX**.
+Publishing reads its credentials from two repository environments (**Settings → Environments**):
+
+- **VS Code Marketplace**: the variables `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` of a Microsoft Entra app registration. Give the app a federated credential for this repository with entity type *Environment* and the name `VS Code Marketplace`, then add the app as a member of the `noorashuvo` publisher at [marketplace.visualstudio.com/manage](https://marketplace.visualstudio.com/manage). If those variables aren't set, the job falls back to a `VSC_PAT` secret (an Azure DevOps token for *All accessible organizations* with the *Marketplace → Manage* scope), but such global tokens stop working on December 1, 2026.
+- **Open VSX**: the secret `OPENVSX_PAT`, an access token from [open-vsx.org](https://open-vsx.org/user-settings/tokens) (sign in with GitHub and accept the publisher agreement first). The first release creates the `noorashuvo` namespace.
