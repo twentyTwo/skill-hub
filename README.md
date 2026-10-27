@@ -1,10 +1,51 @@
 # Skill Hub
 
 [![Release](https://github.com/twentyTwo/skill-hub/actions/workflows/release.yml/badge.svg)](https://github.com/twentyTwo/skill-hub/actions/workflows/release.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Keep one library of AI agent skills (`SKILL.md` folders), collected from anywhere, and apply them to your repositories for Claude Code, GitHub Copilot, Cursor, AGENTS.md-based agents, or any folder you configure.
+**One library of AI agent skills, applied to any repository, for every agent you use.**
+
+Skills (`SKILL.md` folders) are spread across GitHub repos, gists and old projects, and each agent wants them in a different place: `.claude/skills`, `.github/skills`, `.cursor/rules`, `AGENTS.md`. Copying them by hand means every repo ends up with a slightly different, slightly stale version.
+
+Skill Hub keeps one copy of each skill in your hub, applies it to any repository for Claude Code, GitHub Copilot, Cursor or AGENTS.md-based agents, and tells you when a copy is out of date, edited locally, or missing.
 
 ![The Skill Hub sidebar in VS Code: the Library with built-in skills, and a skill's detail page](docs/screenshots/vscode-library.png)
+
+## Why Skill Hub
+
+- **Collect from anywhere.** Paste `anthropics/skills`, a GitHub, GitLab or Bitbucket link, any git URL, a raw file link or a local folder. Search GitHub for `SKILL.md` files when you don't know where a skill lives.
+- **Apply to every agent at once.** One skill, installed for Claude Code, Copilot, Cursor and AGENTS.md in one step, or into any folder you configure.
+- **Know what's out of date.** Each repo gets a `skill-hub.lock.json`. Skill Hub shows which skills have an update, were edited in the repo, or are missing, with one action to fix each.
+- **Share local edits.** Improved a skill inside one repo? **Save to hub** and every other repo sees the update. When both sides changed, compare and merge.
+- **Teammates get the same skills.** Commit the lock file and anyone with Skill Hub can restore the skills from their recorded sources.
+- **Eight built-in skills** to start with: `code-review`, `commit-message`, `pr-description`, `write-tests`, `debug-systematically`, `security-review`, `refactor-safely` and `write-docs`.
+- **Imports other formats.** Plain markdown, Copilot `*.instructions.md` files and Cursor `.mdc` rules are converted into `SKILL.md`.
+
+## Install
+
+**VS Code extension.** Search for **Skill Hub** in the Extensions view, or install it from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=noorashuvo.skill-hub) or [Open VSX](https://open-vsx.org/extension/noorashuvo/skill-hub) (for VSCodium, Cursor and other editors). Each GitHub release also has a `.vsix` file you can install with **Extensions: Install from VSIX…**.
+
+**Desktop app** (Windows, macOS, Linux). There are no installers yet. Build it from source with `cd desktop && npm install && npm run package`. See [desktop/README.md](desktop/README.md).
+
+## Quick start
+
+1. Open the **Skill Hub** icon in the VS Code Activity Bar.
+2. Click **+**, paste `anthropics/skills`, press Enter and tick the skills you want.
+3. Click `→` on a skill in the Library and pick the agents to install it for.
+
+Commit `skill-hub.lock.json` with the installed skill folders, so teammates get the same skills.
+
+## Where skills go
+
+| Agent | Skill Hub writes |
+|---|---|
+| Claude Code | `.claude/skills/<skill>/` |
+| GitHub Copilot | `.github/skills/<skill>/` |
+| Cursor | `.cursor/rules/<skill>.mdc` |
+| Codex, Jules, Zed and other AGENTS.md readers | `.agents/skills/<skill>/` and a managed section in `AGENTS.md` |
+| Anything else | A folder you configure |
+
+## Two apps, one hub
 
 <table>
   <tr>
@@ -25,33 +66,15 @@ Keep one library of AI agent skills (`SKILL.md` folders), collected from anywher
   </tr>
 </table>
 
-There are two apps. They share one hub (`~/.skill-hub`) and the same `skill-hub.lock.json` in each repository:
+- The **VS Code extension** works on the repository you have open. Read [vscode-extension/README.md](vscode-extension/README.md) for every feature, status and setting.
+- The **desktop app** works across all your projects at once, with a matrix of every skill in every project and conflict resolution. Read [desktop/README.md](desktop/README.md).
 
-| Folder | What it is |
-|---|---|
-| [`vscode-extension/`](vscode-extension) | The VS Code extension. Works on the repository you have open: sidebar, skill detail and Add skills pages. |
-| [`desktop/`](desktop) | The desktop app (Electron). Works across all your projects: Library, a Projects matrix, source checks, and conflict resolution. |
-| [`design/`](design) | The UI spec (`DESIGN.md`), mockups, and `tokens.css`, which both apps import. |
+Both use the same hub (`~/.skill-hub`) and the same lock file, so a skill added in one shows up in the other.
 
-The skill logic (sources, library, targets, lock file, status) lives in `vscode-extension/src/core` and has no VS Code imports. The desktop app imports it from there instead of keeping a copy, so a change to core needs both test suites:
+## Contributing
 
-```sh
-cd vscode-extension && npm install && npm test
-cd desktop && npm install && npm test
-```
+Bug reports, ideas and pull requests are welcome. [CONTRIBUTING.md](CONTRIBUTING.md) covers the setup, the code layout, branches, tests and releases. To report a security issue, see [SECURITY.md](SECURITY.md).
 
-See each folder's README for details. In VS Code, the launch configurations **Run Extension** and **Run Desktop App** start each one.
+## License
 
-## CI and releases
-
-GitHub Actions in [`.github/workflows`](.github/workflows):
-
-| Workflow | Runs on | What it does |
-|---|---|---|
-| `ci.yml` | Pull requests (and as the first step of the two below) | Extension: typecheck and unit tests on Linux and Windows, integration tests in VS Code and a `.vsix` artifact on Linux. Desktop: typecheck and tests. |
-| `release.yml` | Push to `main`, or run by hand | Runs CI, then publishes the extension if `vscode-extension/package.json` has a version with no `v<version>` tag yet: VS Code Marketplace and Open VSX in parallel, then a GitHub release with the `.vsix` and that version's CHANGELOG section. A manual run can pick the marketplaces or republish an existing version. |
-| `beta.yml` | Push to `develop` | Runs CI, then attaches `<version>-beta.<run>` as a `.vsix` to a GitHub pre-release. Betas don't go to the marketplaces. |
-
-To release: bump `version` in `vscode-extension/package.json`, add a `## <version>` section to `vscode-extension/CHANGELOG.md`, and merge to `main`.
-
-Publishing needs two secrets, each in a repository environment of the same name: `VSC_PAT` in **VS Code Marketplace** (an Azure DevOps token with the *Marketplace → Manage* scope) and `OPENVSX_PAT` in **Open VSX**.
+[MIT](LICENSE)
